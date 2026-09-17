@@ -1,0 +1,1108 @@
+[
+  {
+    "tittle": "Main Menu",
+    "hasSubRoute": true,
+    "icon": "menu-icon.svg",
+    "showSubRoute": false,
+    "subRoutes": [
+      {
+        "tittle": "Dashboard",
+        "hasSubRoute": true,
+        "icon": "dashboard.svg",
+        "showSubRoute": true,
+        "subRoutes": [
+          {
+            "tittle": "Admin Dashboard",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/dashboard/admin-dashboard",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Sales Dashboard",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/dashboard/sales-dashboard",
+            "subRoutes": []
+          }
+        ]
+      },
+      {
+        "tittle": "Application",
+        "hasSubRoute": true,
+        "showSubRoute": true,
+        "icon": "smartphone",
+        "base": "application",
+        "subRoutes": [
+          {
+            "tittle": "Chat",
+            "route": "/application/chat",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "customSubmenuTwo": false
+          },
+          {
+            "tittle": "Call",
+            "hasSubRoute": true,
+            "showSubRoute": true,
+            "icon": "smartphone",
+            "base": "application",
+            "subRoutes": [
+              {
+                "tittle": "Video Call",
+                "route": "/call/video-call",
+                "hasSubRoute": false,
+                "showSubRoute": false,
+                "subRoutes": []
+              },
+              {
+                "tittle": "Audio Call",
+                "route": "/call/audio-call",
+                "hasSubRoute": false,
+                "showSubRoute": false
+              },
+              {
+                "tittle": "Call History",
+                "route": "/call/call-history",
+                "hasSubRoute": false,
+                "showSubRoute": false
+              }
+            ]
+          },
+          {
+            "tittle": "Calendar",
+            "route": "/application/calendar",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "customSubmenuTwo": false
+          },
+          {
+            "tittle": "Email",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/application/email",
+            "customSubmenuTwo": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "To Do",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/application/todo",
+            "customSubmenuTwo": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "Notes",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/application/notes",
+            "customSubmenuTwo": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "File Manager",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/application/file-manager",
+            "customSubmenuTwo": false,
+            "subRoutes": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tittle": "Inventory",
+    "hasSubRoute": true,
+    "icon": "assets/img/icons/product.svg",
+    "showSubRoute": false,
+    "activeRoute": "product",
+    "subRoutes": [
+      {
+        "tittle": "Products",
+        "hasSubRoute": false,
+        "showSubRoute": true,
+        "route": "/inventory/product-list",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Create Product",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/add-product",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Expired Products",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/expired-products",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Low Stocks",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/low-stocks",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Category",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/category-list",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Sub Category",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/sub-categories",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Brands",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/brand-list",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Units",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/units",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Variant Attributes",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/varriant-attributes",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Warranties",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/warranty",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Print Barcode",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/barcode",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Print QR Code",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/inventory/qrcode",
+        "subRoutes": []
+      }
+    ]
+  },
+  {
+    "tittle": "Sales & Purchase",
+    "hasSubRoute": true,
+    "icon": "purchase1.svg",
+    "showSubRoute": false,
+    "activeRoute": "users",
+    "subRoutes": [
+      {
+        "tittle": "Sales",
+        "icon": "shopping-cart",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "Sales",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/sales/sales-list",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Invoice",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/sales/invoice-report",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Sales Return",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/sales/sales-returns",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Quotation",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/sales/quotation-list",
+            "subRoutes": []
+          },
+          {
+            "tittle": "POS",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/sales/pos",
+            "subRoutes": []
+          }
+        ]
+      },
+      {
+        "tittle": "Purchases",
+        "hasSubRoute": true,
+        "icon": "assets/img/icons/purchase1.svg",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Purchases",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/purchases/purchase-list",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Purchase Order",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/purchases/purchase-order-report",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Purchase Return",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/purchases/purchase-returns",
+            "subRoutes": []
+          },
+          {
+            "tittle": "ManageStock",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/stock/manage-stocks",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Stock Adjustment",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/stock/stock-adjustment",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Stock Transfer",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/stock/stock-transfer",
+            "subRoutes": []
+          }
+        ]
+      },
+      {
+        "tittle": "Expenses",
+        "hasSubRoute": true,
+        "showSubRoute": true,
+        "subRoutes": [
+          {
+            "tittle": "Expenses",
+            "route": "/finance/expenses-list"
+          },
+          {
+            "tittle": "Expense Category",
+            "route": "/finance/expenses-category"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tittle": "User Management",
+    "hasSubRoute": true,
+    "icon": "printer.svg",
+    "showSubRoute": false,
+    "activeRoute": "users",
+    "subRoutes": [
+      {
+        "tittle": "Roles & Permissions",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "Roles & Permissions",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/users/roles-permissions",
+            "subRoutes": []
+          },
+          {
+            "tittle": "Delete Account Request",
+            "hasSubRoute": false,
+            "showSubRoute": false,
+            "route": "/users/delete-account",
+            "subRoutes": []
+          }
+        ]
+      },
+      {
+        "tittle": "Base UI",
+        "hasSubRoute": true,
+        "icon": "assets/img/icons/printer.svg",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Alerts",
+            "route": "/baseui/ui-alerts",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Accordion",
+            "route": "/baseui/ui-accordion",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Avatar",
+            "route": "/baseui/ui-avatar",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Badges",
+            "route": "/baseui/ui-badges",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Border",
+            "route": "/baseui/ui-borders",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Buttons",
+            "route": "/baseui/ui-buttons",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Button Group",
+            "route": "/baseui/ui-buttons-group",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Breadcrumb",
+            "route": "/baseui/ui-breadcrumb",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Card",
+            "route": "/baseui/ui-cards",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Carousel",
+            "route": "/baseui/ui-carousel",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Colors",
+            "route": "/baseui/ui-colors",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Dropdowns",
+            "route": "/baseui/ui-dropdowns",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Grid",
+            "route": "/baseui/ui-grid",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Images",
+            "route": "/baseui/ui-images",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Lightbox",
+            "route": "/baseui/ui-lightbox",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Media",
+            "route": "/baseui/ui-media",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Modals",
+            "route": "/baseui/ui-modals",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Offcanvas",
+            "route": "/baseui/ui-offcanvas",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Pagination",
+            "route": "/baseui/ui-pagination",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Popovers",
+            "route": "/baseui/ui-popovers",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Progress",
+            "route": "/baseui/ui-progress",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Placeholders",
+            "route": "/baseui/ui-placeholders",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Range Slider",
+            "route": "/baseui/ui-rangeslider",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Spinner",
+            "route": "/baseui/ui-spinner",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Sweet Alerts",
+            "route": "/baseui/ui-sweetalerts",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Tooltips",
+            "route": "/baseui/ui-tooltips",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Typography",
+            "route": "/baseui/ui-typography",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Video",
+            "route": "/baseui/ui-video",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Advanced UI",
+        "hasSubRoute": true,
+        "icon": "activity",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Ribbon",
+            "route": "/advancedui/ui-ribbon",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Clipboard",
+            "route": "/advancedui/ui-clipboard",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Drag & Drop",
+            "route": "/advancedui/ui-drag-drop",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Rating",
+            "route": "/advancedui/ui-rating",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Text Editor",
+            "route": "/advancedui/ui-text-editor",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Counter",
+            "route": "/advancedui/ui-counter",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Scrollbar",
+            "route": "/advancedui/ui-scrollbar",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+
+          {
+            "tittle": "Timeline",
+            "route": "/advancedui/ui-timeline",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Charts",
+        "hasSubRoute": true,
+        "icon": "activity",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Apex Charts",
+            "route": "/charts/chart-apex",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Primary-icons",
+        "hasSubRoute": true,
+        "icon": "database",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Fontawesome Icons",
+            "route": "/icons/icon-fontawesome",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Feather Icons",
+            "route": "/icons/icon-feather",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Ionic Icons",
+            "route": "/icons/icon-ionic",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Material Icons",
+            "route": "/icons/icon-material",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Pe7 Icons",
+            "route": "/icons/icon-pe7",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Secondary-icons",
+        "hasSubRoute": true,
+        "icon": "database",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Simpleline Icons",
+            "route": "/icons/icon-simpleline",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Themify Icons",
+            "route": "/icons/icon-themify",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Weather Icons",
+            "route": "/icons/icon-weather",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Typicon Icons",
+            "route": "/icons/icon-typicon",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Flag Icons",
+            "route": "/icons/icon-flag",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Forms",
+        "hasSubRoute": true,
+        "icon": "database",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Basic Inputs",
+            "route": "/forms/form-basic-inputs",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Checkbox & Radios",
+            "route": "/forms/form-checkbox-radios",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Input Groups",
+            "route": "/forms/form-input-groups",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Form Select",
+            "route": "/forms/form-select",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Input Masks",
+            "route": "/forms/form-mask",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "File Uploads",
+            "route": "/forms/form-fileupload",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tittle": "Profile",
+    "hasSubRoute": true,
+    "icon": "menu-icon.svg",
+    "showSubRoute": false,
+    "subRoutes": [
+      {
+        "tittle": "Profile",
+        "route": "/pages/profile",
+        "hasSubRoute": false,
+        "showSubRoute": false
+      },
+      {
+        "tittle": "Authentication",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "Login",
+            "hasSubRoute": true,
+            "showSubRoute": false,
+            "subRoutes": [
+              {
+                "tittle": "Cover",
+                "route": "/",
+                "hasSubRoute": false,
+                "showSubRoute": false
+              },
+              {
+                "tittle": "Illustration",
+                "route": "/authentication/signin-2",
+                "hasSubRoute": false,
+                "showSubRoute": false
+              },
+              {
+                "tittle": "Basic",
+                "route": "/authentication/signin-3",
+                "hasSubRoute": false,
+                "showSubRoute": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tittle": "Pages",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "404 Error",
+            "hasSubRoute": true,
+            "showSubRoute": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "500 Error",
+            "hasSubRoute": true,
+            "showSubRoute": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "Blank page",
+            "hasSubRoute": true,
+            "showSubRoute": false,
+            "subRoutes": []
+          },
+          {
+            "tittle": "Comming Soon",
+            "hasSubRoute": true,
+            "showSubRoute": false,
+            "subRoutes": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tittle": "Reports",
+    "hasSubRoute": true,
+    "icon": "assets/img/icons/printer.svg",
+    "showSubRoute": false,
+    "activeRoute": "users",
+    "subRoutes": [
+      {
+        "tittle": "Sales Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/sales-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Purchase Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/purchase-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Inventory Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/inventory-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Invoice Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/invoice-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Supplier Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/supplier-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Customer Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/customer-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Expense Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/expense-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Income Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/income-report",
+        "subRoutes": []
+      },
+      {
+        "tittle": "Tax Report",
+        "hasSubRoute": false,
+        "showSubRoute": false,
+        "route": "/reports/tax-report",
+        "subRoutes": []
+      }
+    ]
+  },
+  {
+    "tittle": "Settings",
+    "hasSubRoute": true,
+    "icon": "assets/img/icons/printer.svg",
+    "showSubRoute": false,
+    "activeRoute": "users",
+    "subRoutes": [
+      {
+        "tittle": "General Settings",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "Profile",
+            "route": "/settings/general-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Security",
+            "route": "/settings/security-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Notifications",
+            "route": "/settings/notification",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Connected Apps",
+            "route": "/settings/connected-apps",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Website Settings",
+        "hasSubRoute": true,
+        "showSubRoute": false,
+        "subRoutes": [
+          {
+            "tittle": "System Settings",
+            "route": "/settings/system-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Company Settings",
+            "route": "/settings/company-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Localization",
+            "route": "/settings/localization-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Prefixes",
+            "route": "/settings/prefixes",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Preference",
+            "route": "/settings/preference",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Appearance",
+            "route": "/settings/appearance",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Social Authentication",
+            "route": "/settings/social-authentication",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Language",
+            "route": "/settings/language-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+
+      {
+        "tittle": "App Settings",
+        "hasSubRoute": true,
+        "icon": "assets/img/icons/printer.svg",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Invoice",
+            "route": "/settings/invoice-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Printer",
+            "route": "/settings/printer-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "POS",
+            "route": "/settings/pos-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Custom Fields",
+            "route": "/settings/custom-fields",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "System Settings",
+        "hasSubRoute": true,
+        "icon": "monitor",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Email",
+            "route": "/settings/email-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "SMS Gateways",
+            "route": "/settings/sms-gateway",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "OTP",
+            "route": "/settings/otp-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "GDPR Cookies",
+            "route": "/settings/gdpr-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Financial Settings",
+        "hasSubRoute": true,
+        "icon": "activity",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Payment Gateway",
+            "route": "/settings/payment-gateway-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Bank Accounts",
+            "route": "/settings/bank-settings-grid",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Tax Rates",
+            "route": "/settings/tax-rates",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Currencies",
+            "route": "/settings/currency-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Other Settings",
+        "hasSubRoute": true,
+        "icon": "octagon",
+        "showSubRoute": false,
+        "activeRoute": "users",
+        "subRoutes": [
+          {
+            "tittle": "Storage",
+            "route": "/settings/storage-settings",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          },
+          {
+            "tittle": "Ban IP Address",
+            "route": "/settings/ban-ip-address",
+            "hasSubRoute": false,
+            "showSubRoute": false
+          }
+        ]
+      },
+      {
+        "tittle": "Documentation",
+        "hasSubRoute": false,
+        "icon": "octagon",
+        "showSubRoute": false,
+        "activeRoute": "users"
+      },
+      {
+        "tittle": "Changelog v2.0.3",
+        "hasSubRoute": false,
+        "icon": "octagon",
+        "showSubRoute": false,
+        "activeRoute": "users"
+      }
+    ]
+  }
+]

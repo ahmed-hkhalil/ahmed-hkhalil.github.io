@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "Image": "stock-img-01.png",
+        "Title": "Lenevo 3rd Generation",
+        "Price": "$12500"
+    },
+    {
+        "id": 2,
+        "Image": "stock-img-06.png",
+        "Title": "Bold V3.2",
+        "Price": "$1600"
+    },
+    {
+        "id": 3,
+        "Image": "stock-img-02.png",
+        "Title": "Nike Jordan",
+        "Price": "$2000"
+    },
+    {
+        "id": 4,
+        "Image": "stock-img-03.png",
+        "Title": "Apple Series 5 Watch",
+        "Price": "$800"
+    }
+]

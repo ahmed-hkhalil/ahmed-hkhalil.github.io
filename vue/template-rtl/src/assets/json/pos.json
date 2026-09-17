@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "Name": "all",
+        "Image": "category-01.png",
+        "Title": "All Categories",
+        "Items": "80 Items"
+    },
+    {
+        "id": 2,
+        "Name": "headphones",
+        "Image": "category-02.png",
+        "Title": "Headphones",
+        "Items": "4 Items"
+    },
+    {
+        "id": 3,
+        "Name": "shoes",
+        "Image": "category-03.png",
+        "Title": "Shoes",
+        "Items": "14 Items"
+    },
+    {
+        "id": 4,
+        "Name": "mobiles",
+        "Image": "category-04.png",
+        "Title": "Mobiles",
+        "Items": "7 Items"
+    },
+    {
+        "id": 5,
+        "Name": "watches",
+        "Image": "category-05.png",
+        "Title": "Watches",
+        "Items": "16 Items"
+    },
+    {
+        "id": 6,
+        "Name": "laptops",
+        "Image": "category-06.png",
+        "Title": "Laptops",
+        "Items": "18 Items"
+    },
+    {
+        "id": 7,
+        "Name": "allcategory",
+        "Image": "category-01.png",
+        "Title": "All Categories",
+        "Items": "80 Items"
+    },
+    {
+        "id": 8,
+        "Name": "headphone",
+        "Image": "category-02.png",
+        "Title": "Headphones",
+        "Items": "4 Items"
+    },
+    {
+        "id": 9,
+        "Name": "shoe",
+        "Image": "category-03.png",
+        "Title": "Shoes",
+        "Items": "14 Items"
+    },
+    {
+        "id": 10,
+        "Name": "mobile",
+        "Image": "category-04.png",
+        "Title": "Mobiles",
+        "Items": "7 Items"
+    },
+    {
+        "id": 11,
+        "Name": "watche",
+        "Image": "category-05.png",
+        "Title": "Watches",
+        "Items": "16 Items"
+    },
+    {
+        "id": 12,
+        "Name": "laptop",
+        "Image": "category-06.png",
+        "Title": "laptop",
+        "Items": "18 Items"
+    }
+]

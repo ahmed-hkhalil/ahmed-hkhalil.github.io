@@ -1,0 +1,82 @@
+[
+    {
+        "Name" : "Mitchum Daniel",
+        "ID" : "EMP ID : POS001",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-01.jpg",
+        "Role" : "Designer",
+        "Joined" : "23 Jul 2023",
+        "Department" : "UI/UX"
+    },
+    {
+        "Name" : "Susan Lopez",
+        "ID" : "EMP ID : POS002",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-02.jpg",
+        "Role" : "Curator",
+        "Joined" : "30 May 2023",
+        "Department" : "HR"
+    },
+    {
+        "Name" : "Robert Grossman",
+        "ID" : "EMP ID : POS003",
+        "Status" : "Inactive",
+        "Class" : "badge badge-linedanger text-center w-auto me-1",
+        "Image" : "user-03.jpg",
+        "Role" : "System Administrator",
+        "Joined" : "14 Aug 2023",
+        "Department" : "Admin"
+    },
+    {
+        "Name" : "Janet Hembre",
+        "ID" : "EMP ID : POS004",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-06.jpg",
+        "Role" : "Administrative Officer",
+        "Joined" : "17 Jun 2023",
+        "Department" : "Admin"
+    },
+    {
+        "Name" : "Russell Belle",
+        "ID" : "EMP ID : POS005",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-04.jpg",
+        "Role" : "Technician",
+        "Joined" : "16 Jan 2014",
+        "Department" : "Technical"
+    },
+    {
+        "Name" : "Edward K. Muniz",
+        "ID" : "EMP ID : POS006",
+        "Status" : "linedanger",
+        "Class" : "badge badge-linedanger text-center w-auto me-1",
+        "Image" : "user-05.jpg",
+        "Role" : "Office Support Secretary",
+        "Joined" : "07 Feb 2017",
+        "Department" : "Support"
+    },
+    {
+        "Name" : "Susan Moore",
+        "ID" : "EMP ID : POS007",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-07.jpg",
+        "Role" : "Tech Lead",
+        "Joined" : "14 Mar 2023",
+        "Department" : "Engineering"
+    },
+    {
+        "Name" : "Lance Jackson",
+        "ID" : "EMP ID : POS008",
+        "Status" : "Active",
+        "Class" : "badge badge-linesuccess text-center w-auto me-1",
+        "Image" : "user-08.jpg",
+        "Role" : "Database administrator",
+        "Joined" : "23 July 2023",
+        "Department" : "Admin"
+    }
+]

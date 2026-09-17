@@ -1,0 +1,9 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+  <%- include ('./header/header') %> <% if(page_path !='./sales/pos' ){ %> <%-
+  include ('./sidebar/sidebar') %> <% } %>
+  <!-- conditional class binding -->
+  <div class="page-wrapper <%= page_path === './sales/pos' && 'ms-0' %>">
+    <%- include (page_path) %>
+  </div>
+</div>

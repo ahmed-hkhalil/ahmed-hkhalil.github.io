@@ -1,0 +1,79 @@
+[
+    {
+      "Employee": "Steven",
+      "Role" : "Designer",
+      "EmployeeID": "POS001",
+      "Email": "mir34345@example.com",
+      "PhoneNumber": "+1 54554 54788",
+      "Shift": "Regular",
+      "Class" : "badges-success",
+      "Image" : "user-01.jpg",
+      "Status": "Active"
+    },
+    {
+      "Employee": "Susan Lopez",
+      "Role"  : "Curator",
+      "EmployeeID": "POS002",
+      "Email": "susanopez@example.com",
+      "PhoneNumber": "+1 35132 14547",
+      "Shift": "Regular",
+      "Class" : "badges-success",
+      "Image" : "user-02.jpg",
+      "Status": "Active"
+},
+    {
+      "Employee": "Robert Grossman",
+      "Role" : "System Administrator",
+      "EmployeeID": "POS003",
+      "Email": "robertgman@example.com",
+      "PhoneNumber": "+1 14778 66454",
+      "Shift": "Regular",
+      "Class" : "badges-inactive",
+      "Image" : "user-03.jpg",
+      "Status": "Inactive"
+},
+    {
+      "Employee": "Janet Hembre",
+      "Role" :"Administrative Officer",
+      "EmployeeID": "POS004",
+      "Email": "janetembre@example.com",
+      "PhoneNumber": "+1 14554 54774",
+      "Shift": "Regular",
+      "Class" : "badges-success",
+      "Image" : "user-06.jpg",
+      "Status": "Active"
+ },
+    {
+      "Employee": "Russell Belle",
+      "Role" :"Technician",
+      "EmployeeID": "POS005",
+      "Email": "russellbelle@example.com",
+      "PhoneNumber": "+1 14478 45547",
+      "Shift": "Regular",
+      "Class" : "badges-success",
+      "Image" : "user-04.jpg",
+      "Status": "Active"
+ },
+    {
+      "Employee": "Edward K. Muniz",
+      "Role" :  "Office Support Secretary",
+      "EmployeeID": "POS006",
+      "Email": "edward@example.com",
+      "PhoneNumber": "+1 47887 45547",
+      "Shift": "Regular",
+      "Class" : "badges-inactive",
+      "Image" : "user-05.jpg",
+      "Status": "Inactive"
+ },
+    {
+      "Employee": "Susan Moore",
+      "Role" :"Tech Lead",
+      "EmployeeID": "POS007",
+      "Email": "susanmoore@example.com",
+      "PhoneNumber": "+1 47787 54661",
+      "Shift": "Regular",
+      "Class" : "badges-success",
+      "Image" : "user-07.jpg",
+      "Status": "Active"
+ }
+   ]

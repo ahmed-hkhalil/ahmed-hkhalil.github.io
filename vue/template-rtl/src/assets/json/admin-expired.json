@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "Image": "expire-product-01.png",
+        "Title": "Red Premium Handy",
+        "SKU": "PT006",
+        "Manufactured": "17 Jan 2023",
+        "Expired": "29 Mar 2023"
+    },
+    {
+        "id": 2,
+        "Image": "expire-product-02.png",
+        "Title": "Iphone 14 Pro",
+        "SKU": "PT007",
+        "Manufactured": "22 Feb 2023",
+        "Expired": "04 Apr 2023"
+    },
+    {
+        "id": 3,
+        "Image": "expire-product-03.png",
+        "Title": "Black Slim 200",
+        "SKU": "PT008",
+        "Manufactured": "18 Mar 2023",
+        "Expired": "13 May 2023"
+    },
+    {
+        "id": 4,
+        "Image": "expire-product-04.png",
+        "Title": "Woodcraft Sandal",
+        "SKU": "PT009",
+        "Manufactured": "29 Mar 2023",
+        "Expired": "27 May 2023"
+    },
+    {
+        "id": 5,
+        "Image": "stock-img-03.png",
+        "Title": "Apple Series 5 Watch",
+        "SKU": "PT010",
+        "Manufactured": "24 Mar 2023",
+        "Expired": "26 May 2023"
+    }
+]

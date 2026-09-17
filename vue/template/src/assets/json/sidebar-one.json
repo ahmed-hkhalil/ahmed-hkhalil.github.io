@@ -1,0 +1,133 @@
+{
+  "menuItems": [
+    {
+      "id": 1,
+      "label": "Main Menu",
+      "submenu": [
+        {
+          "id": 2,
+          "label": "Dashboard",
+          "submenu": [
+            { "id": 3, "label": "Admin Dashboard", "link": "index.html" },
+            { "id": 4, "label": "Sales Dashboard", "link": "sales-dashboard.html" }
+          ]
+        },
+        {
+          "id": 5,
+          "label": "Application",
+          "submenu": [
+            { "id": 6, "label": "Chat", "link": "chat.html" },
+            {
+              "id": 7,
+              "label": "Call",
+              "submenu": [
+                { "id": 8, "label": "Video Call", "link": "video-call.html" },
+                { "id": 9, "label": "Audio Call", "link": "audio-call.html" },
+                { "id": 10, "label": "Call History", "link": "call-history.html" }
+              ]
+            },
+            { "id": 11, "label": "Calendar", "link": "calendar.html" },
+            { "id": 12, "label": "Email", "link": "email.html" },
+            { "id": 13, "label": "To Do", "link": "todo.html" },
+            { "id": 14, "label": "Notes", "link": "notes.html" },
+            { "id": 15, "label": "File Manager", "link": "file-manager.html" }
+          ]
+        },
+        {
+          "id": 16,
+          "label": "Inventory",
+          "submenu": [
+            { "id": 17, "label": "Products", "link": "product-list.html" },
+            { "id": 18, "label": "Create Product", "link": "add-product.html" },
+            { "id": 19, "label": "Expired Products", "link": "expired-products.html" },
+            { "id": 20, "label": "Low Stocks", "link": "low-stocks.html" },
+            { "id": 21, "label": "Category", "link": "category-list.html" },
+            { "id": 22, "label": "Sub Category", "link": "sub-categories.html" },
+            { "id": 23, "label": "Brands", "link": "brand-list.html" },
+            { "id": 24, "label": "Units", "link": "units.html" },
+            { "id": 25, "label": "Variant Attributes", "link": "varriant-attributes.html" },
+            { "id": 26, "label": "Warranties", "link": "warranty.html" },
+            { "id": 27, "label": "Print Barcode", "link": "barcode.html" },
+            { "id": 28, "label": "Print QR Code", "link": "qrcode.html" }
+          ]
+        },
+        {
+          "id": 29,
+          "label": "Sales & Purchase",
+          "submenu": [
+            {
+              "id": 30,
+              "label": "Sales",
+              "submenu": [
+                { "id": 31, "label": "Sales", "link": "sales-list.html" },
+                { "id": 32, "label": "Invoices", "link": "invoice-report.html" },
+                { "id": 33, "label": "Sales Return", "link": "sales-returns.html" },
+                { "id": 34, "label": "Quotation", "link": "quotation-list.html" },
+                { "id": 35, "label": "POS", "link": "pos.html" },
+                { "id": 36, "label": "Coupons", "link": "coupons.html" }
+              ]
+            },
+            {
+              "id": 37,
+              "label": "Purchase",
+              "submenu": [
+                { "id": 38, "label": "Purchases", "link": "purchase-list.html" },
+                { "id": 39, "label": "Purchase Order", "link": "purchase-order-report.html" },
+                { "id": 40, "label": "Purchase Return", "link": "purchase-returns.html" },
+                { "id": 41, "label": "Manage Stock", "link": "manage-stocks.html" },
+                { "id": 42, "label": "Stock Adjustment", "link": "stock-adjustment.html" },
+                { "id": 43, "label": "Stock Transfer", "link": "stock-transfer.html" }
+              ]
+            },
+            {
+              "id": 44,
+              "label": "Expenses",
+              "submenu": [
+                { "id": 45, "label": "Expenses", "link": "expense-list.html" },
+                { "id": 46, "label": "Expense Category", "link": "expense-category.html" }
+              ]
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "label": "CRM",
+          "submenu": [
+            { "id": 48, "label": "Customers", "link": "customer-list.html" },
+            { "id": 49, "label": "Contacts", "link": "contact-list.html" },
+            { "id": 50, "label": "Leads", "link": "leads.html" },
+            { "id": 51, "label": "Opportunities", "link": "opportunities.html" },
+            { "id": 52, "label": "Accounts", "link": "account-list.html" }
+          ]
+        },
+        {
+          "id": 53,
+          "label": "HRM",
+          "submenu": [
+            { "id": 54, "label": "Employees", "link": "employee-list.html" },
+            { "id": 55, "label": "Departments", "link": "department-list.html" },
+            { "id": 56, "label": "Attendance", "link": "attendance.html" },
+            { "id": 57, "label": "Holidays", "link": "holidays.html" },
+            { "id": 58, "label": "Leave Requests", "link": "leave-requests.html" },
+            { "id": 59, "label": "Announcements", "link": "announcements.html" }
+          ]
+        },
+        {
+          "id": 60,
+          "label": "Reports",
+          "submenu": [
+            { "id": 61, "label": "Sales Report", "link": "sales-report.html" },
+            { "id": 62, "label": "Purchase Report", "link": "purchase-report.html" },
+            { "id": 63, "label": "Expense Report", "link": "expense-report.html" },
+            { "id": 64, "label": "Income Report", "link": "income-report.html" },
+            { "id": 65, "label": "Attendance Report", "link": "attendance-report.html" },
+            { "id": 66, "label": "Payroll Report", "link": "payroll-report.html" },
+            { "id": 67, "label": "Leave Report", "link": "leave-report.html" },
+            { "id": 68, "label": "Employee Report", "link": "employee-report.html" }
+          ]
+        },
+        { "id": 69, "label": "Settings", "link": "settings.html" }
+      ]
+    }
+  ]
+}

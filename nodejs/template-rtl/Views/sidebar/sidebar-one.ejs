@@ -1,0 +1,1905 @@
+<!-- Sidebar -->
+<div class="sidebar new-header sidebar-one">
+  <div id="sidebar-menu" class="sidebar-menu">
+    <ul class="nav">
+      <li class="submenu">
+        <a href="dashboard"
+          ><img src="assets/img/icons/menu-icon.svg" alt="img" /><span>
+            Main Menu</span
+          >
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a href="dashboard"
+              ><img src="assets/img/icons/dashboard.svg" alt="img" /><span>
+                Dashboard</span
+              >
+            </a>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/product.svg" alt="img" /><span>
+                Product</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.product_list || current_routes === routes.product_productDetails || current_routes === routes.product_editProduct ) ? 'active' : '' %>"
+                  href="<%= routes.product_list %>"
+                  >Product List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_addProduct ? 'active' : '' %>"
+                  href="<%= routes.product_addProduct %>"
+                  >Add Product</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.product_categoryList || current_routes === routes.product_editCategory ) ? 'active' : '' %>"
+                  href="<%= routes.product_categoryList %>"
+                  >Category List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_addCategory ? 'active' : '' %>"
+                  href="<%= routes.product_addCategory %>"
+                  >Add Category</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.product_subCategoryList || current_routes === routes.product_editSubCategory ) ? 'active' : '' %>"
+                  href="<%= routes.product_subCategoryList %>"
+                  >Sub Category List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_addSubCategory ? 'active' : '' %>"
+                  href="<%= routes.product_addSubCategory %>"
+                  >Add Sub Category</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.product_brandList || current_routes === routes.product_editBrand ) ? 'active' : '' %>"
+                  href="<%= routes.product_brandList %>"
+                  >Brand List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_addBrand ? 'active' : '' %>"
+                  href="<%= routes.product_addBrand %>"
+                  >Add Brand</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_importProduct ? 'active' : '' %>"
+                  href="<%= routes.product_importProduct %>"
+                  >Import Products</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.product_printBarcode ? 'active' : '' %>"
+                  href="<%= routes.product_printBarcode %>"
+                  >Print Barcode</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/sales1.svg" alt="img" /><span>
+                Sales</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.sales_salesList || current_routes === routes.sales_editSales || current_routes === routes.sales_salesDetails ) ? 'active' : '' %>"
+                  href="<%= routes.sales_salesList %>"
+                  >Sales List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.sales_pos ? 'active' : '' %>"
+                  href="<%= routes.sales_pos %>"
+                  >POS</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.sales_newSales ? 'active' : '' %>"
+                  href="<%= routes.sales_newSales %>"
+                  >New Sales</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.sales_salesReturnLists %>"
+                  href="<%= routes.sales_salesReturnLists %>"
+                  >Sales Return List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.sales_newSalesReturn %>"
+                  href="<%= routes.sales_newSalesReturn %>"
+                  >New Sales Return</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/purchase1.svg" alt="img" /><span>
+                Purchase</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.purchase_purchaseList ) ? 'active' : '' %>"
+                  href="<%= routes.purchase_purchaseList %>"
+                  >Purchase List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.purchase_addPurchase ) ? 'active' : '' %>"
+                  href="<%= routes.purchase_addPurchase %>"
+                  >Add Purchase</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.purchase_importPurchase ? 'active' : '' %>"
+                  href="<%= routes.purchase_importPurchase %>"
+                  >Import Purchase</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/expense1.svg" alt="img" /><span>
+                Expense</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.expense_expenseList ? 'active' : '' %>"
+                  href="<%= routes.expense_expenseList %>"
+                  >Expense List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.expense_addExpense ? 'active' : '' %>"
+                  href="<%= routes.expense_addExpense %>"
+                  >Add Expense</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.expense_expenseCategory ? 'active' : '' %>"
+                  href="<%= routes.expense_expenseCategory %>"
+                  >Expense Category</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/quotation1.svg" alt="img" /><span>
+                Quotation</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.quotation_quotationList ? 'active' : '' %>"
+                  href="<%= routes.quotation_quotationList%>"
+                  >Quotation List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.quotation_addQuotation ? 'active' : '' %>"
+                  href="<%= routes.quotation_addQuotation%>"
+                  >Add Quotation</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/transfer1.svg" alt="img" /><span>
+                Transfer</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.transfer_transferList ? 'active' : '' %>"
+                  href="<%= routes.transfer_transferList %>"
+                  >Transfer List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.transfer_addransfer ? 'active' : '' %>"
+                  href="<%= routes.transfer_addTransfer %>"
+                  >Add Transfer
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.transfer_importTransfer ? 'active' : '' %>"
+                  href="<%= routes.transfer_importTransfer %>"
+                  >Import Transfer
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/return1.svg" alt="img" /><span>
+                Return</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.return_salesReturnList ? 'active' : '' %>"
+                  href="<%= routes.return_salesReturnList %>"
+                  >Sales Return List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.return_addSalesReturn ? 'active' : '' %>"
+                  href="<%= routes.return_addSaleseturn %>"
+                  >Add Sales Return
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.return_purchaseReturnList ? 'active' : '' %>"
+                  href="<%= routes.return_purchaseReturnList %>"
+                  >Purchase Return List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.return_addPurchaseReturn ? 'active' : '' %>"
+                  href="<%= routes.return_addPurchaseReturn %>"
+                  >Add Purchase Return
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/users1.svg" alt="img" /><span>
+                People</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.people_customerList || current_routes === routes.people_editCustomer || current_routes === routes.people_addCustomer ) ? 'active' : '' %>"
+                  href="<%= routes.people_customerList %>"
+                  >Customer List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.people_addCustomer ? 'active' : '' %>"
+                  href="<%= routes.people_addCustomer %>"
+                  >Add Customer
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.people_supplierList || current_routes === routes.people_editSupplier ) ? 'active' : '' %>"
+                  href="<%= routes.people_supplierList %>"
+                  >Supplier List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.people_addSupplier ? 'active' : '' %>"
+                  href="<%= routes.people_addSupplier %>"
+                  >Add Supplier
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.people_userList || current_routes === routes.people_editUser ) ? 'active' : '' %>"
+                  href="<%= routes.people_userList %>"
+                  >User List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.people_addUser ? 'active' : '' %>"
+                  href="<%= routes.people_addUser %>"
+                  >Add User</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.people_storeList || current_routes === routes.people_editList ) ? 'active' : '' %>"
+                  href="<%= routes.people_storeList %>"
+                  >Store List</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.people_addStore ? 'active' : '' %>"
+                  href="<%= routes.people_addStore %>"
+                  >Add Store</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><img src="assets/img/icons/places.svg" alt="img" /><span>
+                Places</span
+              >
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.place_newCountry ) ? 'active' : '' %>"
+                  href="<%= routes.place_newCountry %>"
+                  >>New Country</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.place_countriesList || current_routes === routes.place_editCountry) ? 'active' : '' %>"
+                  href="<%= routes.place_countriesList %>"
+                  >>Countries list</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.place_newState) ? 'active' : '' %>"
+                  href="<%= routes.place_newState %>"
+                  >New State
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= (current_routes === routes.place_stateList) ? 'active' : '' %>"
+                  href="<%= routes.place_stateList %>"
+                  >State list</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <a href="javascript:void(0);"
+          ><img src="assets/img/icons/users1.svg" alt="img" /><span>
+            Users</span
+          >
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a
+              class="<%= (current_routes === routes.people_addUser ) ? 'active' : '' %>"
+              href="<%= routes.people_addUser %>"
+              >New User
+            </a>
+          </li>
+          <li>
+            <a
+              class="<%= (current_routes === routes.people_userList || current_routes === routes.people_addUser || current_routes === routes.people_editUser) ? 'active' : '' %>"
+              href="<%= routes.people_userList %>"
+              >Users List</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <a href="javascript:void(0);"
+          ><i data-feather="layers"></i> <span> Components </span>
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a
+              class="<%= current_routes === routes.components ? 'active' : '' %>"
+              href="<%= routes.components %>"
+              ><i data-feather="layers"></i><span> Components</span>
+            </a>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="box"></i> <span>Elements </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_sweetAlerts ? 'active' : '' %>"
+                  href="<%= routes.elements_sweetAlerts %>"
+                  >Sweet Alerts</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_toolTip ? 'active' : '' %>"
+                  href="<%= routes.elements_toolTip %>"
+                  >Tooltip</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_popOver ? 'active' : '' %>"
+                  href="<%= routes.elements_popOver %>"
+                  >Popover</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_ribbon ? 'active' : '' %>"
+                  href="<%= routes.elements_ribbon %>"
+                  >Ribbon</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_clipboard ? 'active' : '' %>"
+                  href="<%= routes.elements_clipboard %>"
+                  >Clipboard</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_dragDrop ? 'active' : '' %>"
+                  href="<%= routes.elements_dragDrop %>"
+                  >Drag & Drop</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_rangeSlider ? 'active' : '' %>"
+                  href="<%= routes.elements_rangeSlider %>"
+                  >Range Slider</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_rating ? 'active' : '' %>"
+                  href="<%= routes.elements_rating %>"
+                  >Rating</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_toastr ? 'active' : '' %>"
+                  href="<%= routes.elements_toastr %>"
+                  >Toastr</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_textEditor ? 'active' : '' %>"
+                  href="<%= routes.elements_textEditor %>"
+                  >Text Editor</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_counter ? 'active' : '' %>"
+                  href="<%= routes.elements_counter %>"
+                  >Counter</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_scrollBar ? 'active' : '' %>"
+                  href="<%= routes.elements_scrollBar %>"
+                  >Scrollbar</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_spinner ? 'active' : '' %>"
+                  href="<%= routes.elements_spinner %>"
+                  >Spinner</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_notification ? 'active' : '' %>"
+                  href="<%= routes.elements_notification %>"
+                  >Notification</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_lightBox ? 'active' : '' %>"
+                  href="<%= routes.elements_lightBox %>"
+                  >Lightbox</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_stickyNote ? 'active' : '' %>"
+                  href="<%= routes.elements_stickyNote %>"
+                  >Sticky Note</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_timeLine ? 'active' : '' %>"
+                  href="<%= routes.elements_timeLine %>"
+                  >Timeline</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.elements_formWizard ? 'active' : '' %>"
+                  href="<%= routes.elements_formWizard %>"
+                  >Form Wizard</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="bar-chart-2"></i> <span> Charts </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.charts_apexCharts ? 'active' : '' %>"
+                  href="<%= routes.charts_apexCharts %>"
+                  >Apex Charts</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.charts_chartsJs ? 'active' : '' %>"
+                  href="<%= routes.charts_chartsJs %>"
+                  >Chart Js</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.charts_morrisCharts ? 'active' : '' %>"
+                  href="<%= routes.charts_morrisCharts %>"
+                  >Morris Charts</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.charts_flotCharts ? 'active' : '' %>"
+                  href="<%= routes.charts_flotCharts %>"
+                  >Flot Charts</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.charts_peityCharts ? 'active' : '' %>"
+                  href="<%= routes.charts_peityCharts %>"
+                  >Peity Charts</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="award"></i><span> Icons </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_fontAwesomeIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_fontAwesomeIcons %>"
+                  >Fontawesome Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_featherIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_featherIcons %>"
+                  >Feather Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_ionicIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_ionicIcons %>"
+                  >Ionic Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_materialIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_materialIcons %>"
+                  >Material Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_pe7Icons ? 'active' : '' %>"
+                  href="<%= routes.icons_pe7Icons %>"
+                  >Pe7 Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_simpleLineIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_simpleLineIcons %>"
+                  >Simpleline Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_themifyIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_themifyIcons %>"
+                  >Themify Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_weatherIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_weatherIcons %>"
+                  >Weather Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_typiconIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_typiconIcons %>"
+                  >Typicon Icons</a
+                >
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.icons_flagIcons ? 'active' : '' %>"
+                  href="<%= routes.icons_flagIcons %>"
+                  >Flag Icons</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="columns"></i> <span> Forms </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_basicInputs ? 'active' : '' %>"
+                  href="<%= routes.form_basicInputs %>"
+                  >Basic Inputs
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_inputGroups ? 'active' : '' %>"
+                  href="<%= routes.form_inputGroups %>"
+                  >Input Groups
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_horizontalForm ? 'active' : '' %>"
+                  href="<%= routes.form_horizontalForm %>"
+                  >Horizontal Form
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_verticalForm ? 'active' : '' %>"
+                  href="<%= routes.form_verticalForm %>"
+                >
+                  Vertical Form
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_formMask ? 'active' : '' %>"
+                  href="<%= routes.form_formMask %>"
+                  >Form Mask
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_formValidation ? 'active' : '' %>"
+                  href="<%= routes.form_formValidation %>"
+                  >Form Validation
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_formSelected2 ? 'active' : '' %>"
+                  href="<%= routes.form_formSelected2 %>"
+                  >Form Select2
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.form_fileUpload ? 'active' : '' %>"
+                  href="<%= routes.form_fileUpload %>"
+                  >File Upload
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="layout"></i> <span> Table </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.table_basicTable ? 'active' : '' %>"
+                  href="<%= routes.table_basicTable  %>"
+                  >Basic Tables
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.table_dataTable ? 'active' : '' %>"
+                  href="<%= routes.table_dataTable %>"
+                  >Data Table
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.blankPage ? 'active' : '' %>"
+              href="<%= routes.blankPage %>"
+              ><i data-feather="file"></i><span> Blank Page</span>
+            </a>
+          </li>
+          <li class="submenu">
+            <a href="javascript:void(0);"
+              ><i data-feather="alert-octagon"></i> <span> Error Pages </span>
+              <span class="menu-arrow"></span
+            ></a>
+            <ul>
+              <li>
+                <a
+                  class="<%= current_routes === routes.pageNotFound ? 'active' : '' %>"
+                  href="<%= routes.pageNotFound %>"
+                  >404 Error
+                </a>
+              </li>
+              <li>
+                <a
+                  class="<%= current_routes === routes.serverError ? 'active' : '' %>"
+                  href="<%= routes.serverError %>"
+                  >500 Error
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <a href="javascript:void(0);"
+          ><img src="assets/img/icons/product.svg" alt="img" /><span>
+            Application</span
+          >
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a
+              class="<%= current_routes === routes.application_chat ? 'active' : '' %>"
+              href="<%= routes.application_chat %>"
+              >Chat</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.application_calendar ? 'active' : '' %>"
+              href="<%= routes.application_calendar %>"
+              >Calendar</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.application_email ? 'active' : '' %>"
+              href="<%= routes.application_email %>"
+              >Email</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <a href="javascript:void(0);"
+          ><img src="assets/img/icons/time.svg" alt="img" /><span> Report</span>
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_purchaseOrderReport ? 'active' : '' %>"
+              href="<%= routes.report_purchaseOrderReport %>"
+              >Purchase order report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_inventoryReport ? 'active' : '' %>"
+              href="<%= routes.report_inventoryReport %>"
+              >Inventory Report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_salesReport ? 'active' : '' %>"
+              href="<%= routes.report_salesReport %>"
+              >Sales Report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_invoiceReport ? 'active' : '' %>"
+              href="<%= routes.report_invoiceReport %>"
+              >Invoice Report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_purchaseReport ? 'active' : '' %>"
+              href="<%= routes.report_purchaseReport %>"
+              >Purchase Report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_supplierReport ? 'active' : '' %>"
+              href="<%= routes.report_supplierReport %>"
+              >Supplier Report</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.report_customerReport ? 'active' : '' %>"
+              href="<%= routes.report_customerReport %>"
+              >Customer Report</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <a href="javascript:void(0);"
+          ><img src="assets/img/icons/settings.svg" alt="img" /><span>
+            Settings</span
+          >
+          <span class="menu-arrow"></span
+        ></a>
+        <ul>
+          <li>
+            <a
+              class="<%= current_routes === routes.setting_generalSetting ? 'active' : '' %>"
+              href="<%= routes.setting_generalSetting %>"
+              >General Settings</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.setting_emailSetting ? 'active' : '' %>"
+              href="<%= routes.setting_emailSetting %>"
+              >Email Settings</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.setting_paymentSetting ? 'active' : '' %>"
+              href="<%= routes.setting_paymentSetting %>"
+              >Payment Settings</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.setting_currencySetting ? 'active' : '' %>"
+              href="<%= routes.setting_currencySetting %>"
+              >Currency Settings</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= (current_routes === routes.setting_groupPermission || current_routes === routes.setting_createPermission || current_routes === routes.setting_editPermission ) ? 'active' : '' %>"
+              href="<%= routes.setting_groupPermission %>"
+              >Group Permissions</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= current_routes === routes.setting_taxRates ? 'active' : '' %>"
+              href="<%= routes.setting_taxRates %>"
+              >Tax Rates</a
+            >
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- /Sidebar -->
+
+<!-- Sidebar -->
+<div class="sidebar sidebar-one hide-sidebar" id="sidebar">
+  <div class="sidebar-inner slimscroll">
+    <div id="sidebar-menu" class="sidebar-menu">
+      <ul>
+        <li class="active">
+          <a href="dashboard"
+            ><img src="assets/img/icons/dashboard.svg" alt="img" /><span>
+              Dashboard</span
+            >
+          </a>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/product.svg" alt="img" /><span>
+              Product</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.product_list || current_routes === routes.product_productDetails || current_routes === routes.product_editProduct ) ? 'active' : '' %>"
+                href="<%= routes.product_list %>"
+                >Product List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_addProduct ? 'active' : '' %>"
+                href="<%= routes.product_addProduct %>"
+                >Add Product</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.product_categoryList || current_routes === routes.product_editCategory ) ? 'active' : '' %>"
+                href="<%= routes.product_categoryList %>"
+                >Category List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_addCategory ? 'active' : '' %>"
+                href="<%= routes.product_addCategory %>"
+                >Add Category</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.product_subCategoryList || current_routes === routes.product_editSubCategory ) ? 'active' : '' %>"
+                href="<%= routes.product_subCategoryList %>"
+                >Sub Category List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_addSubCategory ? 'active' : '' %>"
+                href="<%= routes.product_addSubCategory %>"
+                >Add Sub Category</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.product_brandList || current_routes === routes.product_editBrand ) ? 'active' : '' %>"
+                href="<%= routes.product_brandList %>"
+                >Brand List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_addBrand ? 'active' : '' %>"
+                href="<%= routes.product_addBrand %>"
+                >Add Brand</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_importProduct ? 'active' : '' %>"
+                href="<%= routes.product_importProduct %>"
+                >Import Products</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.product_printBarcode ? 'active' : '' %>"
+                href="<%= routes.product_printBarcode %>"
+                >Print Barcode</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/sales1.svg" alt="img" /><span>
+              Sales</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.sales_salesList || current_routes === routes.sales_editSales || current_routes === routes.sales_salesDetails ) ? 'active' : '' %>"
+                href="<%= routes.sales_salesList %>"
+                >Sales List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.sales_pos ? 'active' : '' %>"
+                href="<%= routes.sales_pos %>"
+                >POS</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.sales_newSales ? 'active' : '' %>"
+                href="<%= routes.sales_newSales %>"
+                >New Sales</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.sales_salesReturnLists %>"
+                href="<%= routes.sales_salesReturnLists %>"
+                >Sales Return List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.sales_newSalesReturn %>"
+                href="<%= routes.sales_newSalesReturn %>"
+                >New Sales Return</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/purchase1.svg" alt="img" /><span>
+              Purchase</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.purchase_purchaseList ) ? 'active' : '' %>"
+                href="<%= routes.purchase_purchaseList %>"
+                >Purchase List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.purchase_addPurchase ) ? 'active' : '' %>"
+                href="<%= routes.purchase_addPurchase %>"
+                >Add Purchase</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.purchase_importPurchase ? 'active' : '' %>"
+                href="<%= routes.purchase_importPurchase %>"
+                >Import Purchase</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/expense1.svg" alt="img" /><span>
+              Expense</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.expense_expenseList ? 'active' : '' %>"
+                href="<%= routes.expense_expenseList %>"
+                >Expense List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.expense_addExpense ? 'active' : '' %>"
+                href="<%= routes.expense_addExpense %>"
+                >Add Expense</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.expense_expenseCategory ? 'active' : '' %>"
+                href="<%= routes.expense_expenseCategory %>"
+                >Expense Category</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/quotation1.svg" alt="img" /><span>
+              Quotation</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.quotation_quotationList ? 'active' : '' %>"
+                href="<%= routes.quotation_quotationList%>"
+                >Quotation List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.quotation_addQuotation ? 'active' : '' %>"
+                href="<%= routes.quotation_addQuotation%>"
+                >Add Quotation</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/transfer1.svg" alt="img" /><span>
+              Transfer</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.transfer_transferList ? 'active' : '' %>"
+                href="<%= routes.transfer_transferList %>"
+                >Transfer List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.transfer_addransfer ? 'active' : '' %>"
+                href="<%= routes.transfer_addTransfer %>"
+                >Add Transfer
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.transfer_importTransfer ? 'active' : '' %>"
+                href="<%= routes.transfer_importTransfer %>"
+                >Import Transfer
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/return1.svg" alt="img" /><span>
+              Return</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.return_salesReturnList ? 'active' : '' %>"
+                href="<%= routes.return_salesReturnList %>"
+                >Sales Return List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.return_addSalesReturn ? 'active' : '' %>"
+                href="<%= routes.return_addSaleseturn %>"
+                >Add Sales Return
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.return_purchaseReturnList ? 'active' : '' %>"
+                href="<%= routes.return_purchaseReturnList %>"
+                >Purchase Return List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.return_addPurchaseReturn ? 'active' : '' %>"
+                href="<%= routes.return_addPurchaseReturn %>"
+                >Add Purchase Return
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/users1.svg" alt="img" /><span>
+              People</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_customerList || current_routes === routes.people_editCustomer || current_routes === routes.people_addCustomer ) ? 'active' : '' %>"
+                href="<%= routes.people_customerList %>"
+                >Customer List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.people_addCustomer ? 'active' : '' %>"
+                href="<%= routes.people_addCustomer %>"
+                >Add Customer
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_supplierList || current_routes === routes.people_editSupplier ) ? 'active' : '' %>"
+                href="<%= routes.people_supplierList %>"
+                >Supplier List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.people_addSupplier ? 'active' : '' %>"
+                href="<%= routes.people_addSupplier %>"
+                >Add Supplier
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_userList || current_routes === routes.people_editUser ) ? 'active' : '' %>"
+                href="<%= routes.people_userList %>"
+                >User List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.people_addUser ? 'active' : '' %>"
+                href="<%= routes.people_addUser %>"
+                >Add User</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_storeList || current_routes === routes.people_editList ) ? 'active' : '' %>"
+                href="<%= routes.people_storeList %>"
+                >Store List</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.people_addStore ? 'active' : '' %>"
+                href="<%= routes.people_addStore %>"
+                >Add Store</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/places.svg" alt="img" /><span>
+              Places</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.place_newCountry ) ? 'active' : '' %>"
+                href="<%= routes.place_newCountry %>"
+                >New Country</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.place_countriesList || current_routes === routes.place_editCountry) ? 'active' : '' %>"
+                href="<%= routes.place_countriesList %>"
+                >Countries list</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.place_newState) ? 'active' : '' %>"
+                href="<%= routes.place_newState %>"
+                >New State
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.place_stateList) ? 'active' : '' %>"
+                href="<%= routes.place_stateList %>"
+                >State list</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a
+            class="<%= current_routes === routes.components ? 'active' : '' %>"
+            href="<%= routes.components %>"
+            ><i data-feather="layers"></i><span> Components</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="<%= current_routes === routes.blankPage ? 'active' : '' %>"
+            href="<%= routes.blankPage %>"
+            ><i data-feather="file"></i><span> Blank Page</span>
+          </a>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="alert-octagon"></i> <span> Error Pages </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.pageNotFound ? 'active' : '' %>"
+                href="<%= routes.pageNotFound %>"
+                >404 Error
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.serverError ? 'active' : '' %>"
+                href="<%= routes.serverError %>"
+                >500 Error
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="box"></i> <span>Elements </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_sweetAlerts ? 'active' : '' %>"
+                href="<%= routes.elements_sweetAlerts %>"
+                >Sweet Alerts</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_toolTip ? 'active' : '' %>"
+                href="<%= routes.elements_toolTip %>"
+                >Tooltip</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_popOver ? 'active' : '' %>"
+                href="<%= routes.elements_popOver %>"
+                >Popover</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_ribbon ? 'active' : '' %>"
+                href="<%= routes.elements_ribbon %>"
+                >Ribbon</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_clipboard ? 'active' : '' %>"
+                href="<%= routes.elements_clipboard %>"
+                >Clipboard</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_dragDrop ? 'active' : '' %>"
+                href="<%= routes.elements_dragDrop %>"
+                >Drag & Drop</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_rangeSlider ? 'active' : '' %>"
+                href="<%= routes.elements_rangeSlider %>"
+                >Range Slider</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_rating ? 'active' : '' %>"
+                href="<%= routes.elements_rating %>"
+                >Rating</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_toastr ? 'active' : '' %>"
+                href="<%= routes.elements_toastr %>"
+                >Toastr</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_textEditor ? 'active' : '' %>"
+                href="<%= routes.elements_textEditor %>"
+                >Text Editor</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_counter ? 'active' : '' %>"
+                href="<%= routes.elements_counter %>"
+                >Counter</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_scrollBar ? 'active' : '' %>"
+                href="<%= routes.elements_scrollBar %>"
+                >Scrollbar</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_spinner ? 'active' : '' %>"
+                href="<%= routes.elements_spinner %>"
+                >Spinner</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_notification ? 'active' : '' %>"
+                href="<%= routes.elements_notification %>"
+                >Notification</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_lightBox ? 'active' : '' %>"
+                href="<%= routes.elements_lightBox %>"
+                >Lightbox</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_stickyNote ? 'active' : '' %>"
+                href="<%= routes.elements_stickyNote %>"
+                >Sticky Note</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_timeLine ? 'active' : '' %>"
+                href="<%= routes.elements_timeLine %>"
+                >Timeline</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.elements_formWizard ? 'active' : '' %>"
+                href="<%= routes.elements_formWizard %>"
+                >Form Wizard</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="bar-chart-2"></i> <span> Charts </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.charts_apexCharts ? 'active' : '' %>"
+                href="<%= routes.charts_apexCharts %>"
+                >Apex Charts</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.charts_chartsJs ? 'active' : '' %>"
+                href="<%= routes.charts_chartsJs %>"
+                >Chart Js</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.charts_morrisCharts ? 'active' : '' %>"
+                href="<%= routes.charts_morrisCharts %>"
+                >Morris Charts</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.charts_flotCharts ? 'active' : '' %>"
+                href="<%= routes.charts_flotCharts %>"
+                >Flot Charts</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.charts_peityCharts ? 'active' : '' %>"
+                href="<%= routes.charts_peityCharts %>"
+                >Peity Charts</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="award"></i><span> Icons </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_fontAwesomeIcons ? 'active' : '' %>"
+                href="<%= routes.icons_fontAwesomeIcons %>"
+                >Fontawesome Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_featherIcons ? 'active' : '' %>"
+                href="<%= routes.icons_featherIcons %>"
+                >Feather Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_ionicIcons ? 'active' : '' %>"
+                href="<%= routes.icons_ionicIcons %>"
+                >Ionic Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_materialIcons ? 'active' : '' %>"
+                href="<%= routes.icons_materialIcons %>"
+                >Material Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_pe7Icons ? 'active' : '' %>"
+                href="<%= routes.icons_pe7Icons %>"
+                >Pe7 Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_simpleLineIcons ? 'active' : '' %>"
+                href="<%= routes.icons_simpleLineIcons %>"
+                >Simpleline Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_themifyIcons ? 'active' : '' %>"
+                href="<%= routes.icons_themifyIcons %>"
+                >Themify Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_weatherIcons ? 'active' : '' %>"
+                href="<%= routes.icons_weatherIcons %>"
+                >Weather Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_typiconIcons ? 'active' : '' %>"
+                href="<%= routes.icons_typiconIcons %>"
+                >Typicon Icons</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.icons_flagIcons ? 'active' : '' %>"
+                href="<%= routes.icons_flagIcons %>"
+                >Flag Icons</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="columns"></i> <span> Forms </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_basicInputs ? 'active' : '' %>"
+                href="<%= routes.form_basicInputs %>"
+                >Basic Inputs
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_inputGroups ? 'active' : '' %>"
+                href="<%= routes.form_inputGroups %>"
+                >Input Groups
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_horizontalForm ? 'active' : '' %>"
+                href="<%= routes.form_horizontalForm %>"
+                >Horizontal Form
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_verticalForm ? 'active' : '' %>"
+                href="<%= routes.form_verticalForm %>"
+              >
+                Vertical Form
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_formMask ? 'active' : '' %>"
+                href="<%= routes.form_formMask %>"
+                >Form Mask
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_formValidation ? 'active' : '' %>"
+                href="<%= routes.form_formValidation %>"
+                >Form Validation
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_formSelected2 ? 'active' : '' %>"
+                href="<%= routes.form_formSelected2 %>"
+                >Form Select2
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.form_fileUpload ? 'active' : '' %>"
+                href="<%= routes.form_fileUpload %>"
+                >File Upload
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><i data-feather="layout"></i> <span> Table </span>
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.table_basicTable ? 'active' : '' %>"
+                href="<%= routes.table_basicTable  %>"
+                >Basic Tables
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.table_dataTable ? 'active' : '' %>"
+                href="<%= routes.table_dataTable %>"
+                >Data Table
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/product.svg" alt="img" /><span>
+              Application</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.application_chat ? 'active' : '' %>"
+                href="<%= routes.application_chat %>"
+                >Chat</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.application_calendar ? 'active' : '' %>"
+                href="<%= routes.application_calendar %>"
+                >Calendar</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.application_email ? 'active' : '' %>"
+                href="<%= routes.application_email %>"
+                >Email</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/time.svg" alt="img" /><span>
+              Report</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_purchaseOrderReport ? 'active' : '' %>"
+                href="<%= routes.report_purchaseOrderReport %>"
+                >Purchase order report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_inventoryReport ? 'active' : '' %>"
+                href="<%= routes.report_inventoryReport %>"
+                >Inventory Report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_salesReport ? 'active' : '' %>"
+                href="<%= routes.report_salesReport %>"
+                >Sales Report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_invoiceReport ? 'active' : '' %>"
+                href="<%= routes.report_invoiceReport %>"
+                >Invoice Report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_purchaseReport ? 'active' : '' %>"
+                href="<%= routes.report_purchaseReport %>"
+                >Purchase Report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_supplierReport ? 'active' : '' %>"
+                href="<%= routes.report_supplierReport %>"
+                >Supplier Report</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.report_customerReport ? 'active' : '' %>"
+                href="<%= routes.report_customerReport %>"
+                >Customer Report</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/users1.svg" alt="img" /><span>
+              Users</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_addUser ) ? 'active' : '' %>"
+                href="<%= routes.people_userList %>"
+                >New User
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.people_userList || current_routes === routes.people_addUser || current_routes === routes.people_editUser) ? 'active' : '' %>"
+                href="<%= routes.people_userList %>"
+                >Users List</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <a href="javascript:void(0);"
+            ><img src="assets/img/icons/settings.svg" alt="img" /><span>
+              Settings</span
+            >
+            <span class="menu-arrow"></span
+          ></a>
+          <ul>
+            <li>
+              <a
+                class="<%= current_routes === routes.setting_generalSetting ? 'active' : '' %>"
+                href="<%= routes.setting_generalSetting %>"
+                >General Settings</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.setting_emailSetting ? 'active' : '' %>"
+                href="<%= routes.setting_emailSetting %>"
+                >Email Settings</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.setting_paymentSetting ? 'active' : '' %>"
+                href="<%= routes.setting_paymentSetting %>"
+                >Payment Settings</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.setting_currencySetting ? 'active' : '' %>"
+                href="<%= routes.setting_currencySetting %>"
+                >Currency Settings</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= (current_routes === routes.setting_groupPermission || current_routes === routes.setting_createPermission || current_routes === routes.setting_editPermission ) ? 'active' : '' %>"
+                href="<%= routes.setting_groupPermission %>"
+                >Group Permissions</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= current_routes === routes.setting_taxRates ? 'active' : '' %>"
+                href="<%= routes.setting_taxRates %>"
+                >Tax Rates</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- /Sidebar -->

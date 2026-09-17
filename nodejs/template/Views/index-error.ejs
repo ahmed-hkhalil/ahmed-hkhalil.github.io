@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('./meta') %> <%- include ('./style') %>
+    <title>Dreams Pos <%= title %></title>
+  </head>
+  <body class="error-page">
+    <div id="global-loader">
+      <div class="whirly-loader"></div>
+    </div>
+
+    <div class="main-wrapper">
+      <div class="error-box"><%- include (page_path) %></div>
+    </div>
+    <%- include ('./theme-settings') %> <%- include ('./script') %>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+  <%- include ('./header/header-two') %>
+  <div class="container">
+    <!-- Sidebar -->
+    <% if(page_path !='./sales/pos' ){ %> <%- include ('./sidebar/sidebar-two')
+    %> <% } %>
+    <!-- /Sidebar -->
+
+    <div
+      class="page-wrapper page-wrapper-two <%= page_path === './sales/pos' && 'ms-0' %>"
+    >
+      <%- include (page_path) %>
+    </div>
+  </div>
+</div>
+<!-- /Main Wrapper -->

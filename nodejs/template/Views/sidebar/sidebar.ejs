@@ -1,0 +1,243 @@
+<!-- Sidebar -->
+			<div class="sidebar" id="sidebar">
+				<div class="sidebar-inner slimscroll">
+					<div id="sidebar-menu" class="sidebar-menu">
+						<ul>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Main</h6>
+								<ul>
+									<li class="<%= current_routes === routes.dashboard ? 'active' : '' %>" >
+										<a href="dashboard" ><i data-feather="grid"></i><span>Dashboard</span></a>
+									</li>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.application_chat || current_routes === routes.application_calendar || current_routes === routes.application_email ) &&  'active subdrop' %> " ><i data-feather="smartphone"></i><span>Application</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.application_chat ? 'active' : '' %>" href="<%= routes.application_chat %>">Chat</a></li>
+											<li><a class="<%= current_routes === routes.application_calendar ? 'active' : '' %>" href="<%= routes.application_calendar %>">Calendar</a></li>
+											<li><a class="<%= current_routes === routes.application_email ? 'active' : '' %>" href="<%= routes.application_email %>">Email</a></li>
+										</ul>
+									</li>
+								</ul>								
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Products</h6>
+								<ul>
+								  <li><a class="<%= (current_routes === routes.product_list || current_routes === routes.product_productDetails || current_routes === routes.product_editProduct ) ? 'active' : '' %>" href="<%= routes.product_list %>"><i data-feather="box"></i><span>Products</span></a></li>
+								  <li><a class="<%= current_routes === routes.product_addProduct ? 'active' : '' %>" href="<%= routes.product_addProduct %>"><i data-feather="plus-square"></i><span>Create Product</span></a></li>
+								  <li><a class="<%= (current_routes === routes.product_categoryList || current_routes === routes.product_addCategory || current_routes === routes.product_editCategory ) ? 'active' : '' %>" href="<%= routes.product_categoryList %>"><i data-feather="codepen"></i><span>Category</span></a></li>
+								  <li><a class="<%= (current_routes === routes.product_brandList || current_routes === routes.product_addBrand || current_routes === routes.product_editBrand ) ? 'active' : '' %>" href="<%= routes.product_brandList %>"><i data-feather="tag"></i><span>Brands</span></a></li>
+								  <li><a class="<%= (current_routes === routes.product_subCategoryList || current_routes === routes.product_addSubCategory || current_routes === routes.product_editSubCategory ) ? 'active' : '' %>" href="<%= routes.product_subCategoryList %>"><i data-feather="speaker"></i><span>Sub Category</span></a></li>									
+								  <li><a class="<%= current_routes === routes.product_printBarcode ? 'active' : '' %>" href="<%= routes.product_printBarcode %>"><i data-feather="align-justify"></i><span>Print Barcode</span></a></li>
+								  <li><a class="<%= current_routes === routes.product_importProduct ? 'active' : '' %>" href="<%= routes.product_importProduct %>"><i data-feather="minimize-2"></i><span>Import Products</span></a></li>
+							  </ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Sales</h6>
+								<ul>
+									<li><a class="<%= (current_routes === routes.sales_salesList || current_routes === routes.sales_newSales || current_routes === routes.sales_editSales || current_routes === routes.sales_salesDetails ) ? 'active' : '' %>" href="<%= routes.sales_salesList %>"><i data-feather="shopping-cart"></i><span>Sales</span></a></li>
+									<li><a class="<%= current_routes === routes.report_invoiceReport ? 'active' : '' %>" href="<%= routes.report_invoiceReport %>"><i data-feather="file-text"></i><span>Invoices</span></a></li>
+									<li><a class="<%= (current_routes === routes.sales_salesReturnLists || current_routes === routes.sales_newSalesReturn || current_routes === routes.sales_editSalesReturns ) ? 'active' : '' %>" href="<%= routes.sales_salesReturnLists %>"><i data-feather="copy"></i><span>Sales Return</span></a></li>	
+									<li><a class="<%= (current_routes === routes.quotation_quotationList || current_routes === routes.quotation_addQuotation || current_routes === routes.quotation_editQuotation ) ? 'active' : '' %>" href="<%= routes.quotation_quotationList %>"><i data-feather="save"></i><span>Quotation</span></a></li>								
+									<li><a class="<%= current_routes === routes.sales_pos ? 'active' : '' %>" href="<%= routes.sales_pos %>"><i data-feather="hard-drive"></i><span>POS</a></li>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= ( current_routes === routes.transfer_transferList || current_routes === routes.transfer_addTransfer || current_routes === routes.transfer_editTransfer || current_routes === routes.transfer_importTransfer ) &&  'active subdrop' %>"><i data-feather="shuffle"></i><span>Transfer</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= (current_routes === routes.transfer_transferList || current_routes === routes.transfer_addTransfer || current_routes === routes.transfer_editTransfer ) ? 'active' : '' %>" href="<%= routes.transfer_transferList %>">Transfer List</a></li>
+											<li><a class="<%= current_routes === routes.transfer_importTransfer ? 'active' : '' %>" href="<%= routes.transfer_importTransfer %>">Import Transfer </a></li>
+										</ul>
+									</li>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= ( current_routes === routes.return_salesReturnList || current_routes === routes.return_addSalesReturn || current_routes === routes.return_editSalesReturn || current_routes === routes.return_addPurchaseReturn || current_routes === routes.return_purchaseReturnList || current_routes === routes.return_editPurchaseReturn ) &&  'active subdrop' %>"><i data-feather="corner-up-left"></i><span>Return</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= (current_routes === routes.return_salesReturnList || current_routes === routes.return_addSalesReturn || current_routes === routes.return_editSalesReturn ) ? 'active' : '' %>" href="<%= routes.return_salesReturnList %>">Sales Return</a></li>
+											<li><a class="<%= (current_routes === routes.return_purchaseReturnList || current_routes === routes.return_addPurchaseReturn || current_routes === routes.return_editPurchaseReturn ) ? 'active' : '' %>" href="<%= routes.return_purchaseReturnList %>">Purchase Return</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Purchases</h6>
+								<ul>
+									<li><a class="<%= (current_routes === routes.purchase_purchaseList || current_routes === routes.purchase_addPurchase || current_routes === routes.purchase_editPurchase ) ? 'active' : '' %>" href="<%= routes.purchase_purchaseList %>"><i data-feather="shopping-bag"></i><span>Purchases</span></a></li>
+									<li><a class="<%= current_routes === routes.purchase_importPurchase ? 'active' : '' %>" href="<%= routes.purchase_importPurchase %>"><i data-feather="minimize-2"></i><span>Import Purchases</span></a></li>
+									<li><a class="<%= current_routes === routes.report_purchaseOrderReport ? 'active' : '' %>" href="<%= routes.report_purchaseOrderReport %>"><i data-feather="file-minus"></i><span>Purchase Order</span></a></li>
+									<li><a class="<%= (current_routes === routes.return_purchaseReturnList || current_routes === routes.return_editPurchaseReturn ) ? 'active' : '' %>" href="<%= routes.return_purchaseReturnList %>"><i data-feather="refresh-cw"></i><span>Purchase Return</span></a></li>									
+								</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Finance & Accounts</h6>								
+								<ul>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= ( current_routes === routes.expense_expenseList ||  current_routes === routes.expense_addExpense || current_routes === routes.expense_editExpense || current_routes === routes.expense_expenseCategory ) &&  'active subdrop' %>"><i data-feather="file-text"></i><span>Expense</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= (current_routes === routes.expense_expenseList || current_routes === routes.expense_addExpense || current_routes === routes.expense_editExpense ) ? 'active' : '' %>" href="<%= routes.expense_expenseList %>">Expenses</a></li>
+											<li><a class="<%= current_routes === routes.expense_expenseCategory ? 'active' : '' %>" href="<%= routes.expense_expenseCategory %>">Expense Category</a></li>
+										</ul>
+									</li>
+									
+								</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Peoples</h6>		
+								<ul>
+		  							<li><a class="<%= (current_routes === routes.people_customerList || current_routes === routes.people_editCustomer || current_routes === routes.people_addCustomer ) ? 'active' : '' %>" href="<%= routes.people_customerList %>"><i data-feather="user"></i><span>Customers</span></a></li>
+			  						<li><a class="<%= (current_routes === routes.people_supplierList || current_routes === routes.people_editSupplier || current_routes === routes.people_addSupplier  ) ? 'active' : '' %>" href="<%= routes.people_supplierList %>"><i data-feather="users"></i><span>Suppliers</span></a></li>
+			  						<li><a class="<%= (current_routes === routes.people_userList || current_routes === routes.people_editUser || current_routes === routes.people_addUser ) ? 'active' : '' %>" href="<%= routes.people_userList %>"><i data-feather="user-check"></i><span>Users</span></a></li>
+						  			<li><a class="<%= (current_routes === routes.people_storeList || current_routes === routes.people_editList || current_routes === routes.people_addStore ) ? 'active' : '' %>" href="<%= routes.people_storeList %>"><i data-feather="home"></i><span>Stores</span></a></li>
+				  				</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Reports</h6>
+								<ul>
+									<li><a class="<%= current_routes === routes.report_salesReport ? 'active' : '' %>" href="<%= routes.report_salesReport %>"><i data-feather="bar-chart-2"></i><span>Sales Report</span></a></li>
+									<li><a class="<%= current_routes === routes.report_purchaseOrderReport ? 'active' : '' %>" href="<%= routes.report_purchaseOrderReport %>"><i data-feather="pie-chart"></i><span>Purchase report</span></a></li>
+									<li><a class="<%= current_routes === routes.report_inventoryReport ? 'active' : '' %>" href="<%= routes.report_inventoryReport %>"><i data-feather="credit-card"></i><span>Inventory Report</span></a></li>									
+									<li><a class="<%= current_routes === routes.report_invoiceReport ? 'active' : '' %>" href="<%= routes.report_invoiceReport %>"><i data-feather="file"></i><span>Invoice Report</span></a></li>
+									<li><a class="<%= current_routes === routes.report_purchaseReport ? 'active' : '' %>" href="<%= routes.report_purchaseReport %>"><i data-feather="bar-chart"></i><span>Purchase Report</span></a></li>
+									<li><a class="<%= current_routes === routes.report_supplierReport ? 'active' : '' %>" href="<%= routes.report_supplierReport %>"><i data-feather="database"></i><span>Supplier Report</span></a></li>
+									<li><a class="<%= current_routes === routes.report_customerReport ? 'active' : '' %>" href="<%= routes.report_customerReport %>"><i data-feather="pie-chart"></i><span>Customer Report</span></a></li>
+								</ul>
+							</li>															
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">User Management</h6>		
+								<ul>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.users_newUser || current_routes === routes.users_usersList ) && 'active subdrop' %>"><i data-feather="users"></i><span>Manage Users</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.users_newUser ? 'active' : '' %>" href="<%= routes.users_newUser %>">New User </a></li>
+											<li><a class="<%= current_routes === routes.users_usersList ? 'active' : '' %>" href="<%= routes.users_usersList %>">Users List</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>			
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Pages</h6>		
+								<ul>
+									<li class="submenu">
+										<a href="javascript:void(0);"><i data-feather="shield"></i><span>Authentication</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a href="login">Log in</a></li>
+											<li><a href="signup">Register</a></li>
+											<li><a href="forgetPassword">Forgot Password</a></li>
+											<li><a href="resetPassword">Reset Password</a></li>
+										</ul>
+									</li>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.pageNotFound || current_routes === routes.serverError ) && 'active subdrop' %>"><i data-feather="file-minus"></i><span>Error Pages</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.pageNotFound ? 'active' : '' %>" href="<%= routes.pageNotFound %>">404 Error </a></li>
+											<li><a class="<%= current_routes === routes.serverError ? 'active' : '' %>" href="<%= routes.serverError %>">500 Error </a></li>
+										</ul>
+									</li>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.place_countriesList || current_routes === routes.place_newCountry || current_routes === routes.place_editCountry || current_routes === routes.place_stateList || current_routes === routes.place_newState  || current_routes === routes.place_editState ) && 'active subdrop' %>"><i data-feather="map"></i><span>Places</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= (current_routes === routes.place_countriesList || current_routes === routes.place_newCountry || current_routes === routes.place_editCountry) ? 'active' : '' %>" href="<%= routes.place_countriesList %>">Countries</a></li>
+											<li><a class="<%= (current_routes === routes.place_stateList || current_routes === routes.place_newState || current_routes === routes.place_editState) ? 'active' : '' %>" href="<%= routes.place_stateList %>">States</a></li>
+										</ul>
+									</li>
+									<li>
+										<a class="<%= current_routes === routes.blankPage ? 'active' : '' %>" href="<%= routes.blankPage %>" ><i data-feather="file"></i><span>Blank Page</span> </a>
+									</li>
+									<li>
+										<a class="<%= current_routes === routes.components ? 'active' : '' %>" href="<%= routes.components %>" ><i data-feather="pen-tool"></i><span>Components</span> </a>
+									</li>
+								</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">UI Interface</h6>		
+								<ul>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.elements_sweetAlerts || current_routes === routes.elements_toolTip || current_routes === routes.elements_popOver || current_routes === routes.elements_ribbon || current_routes === routes.elements_clipboard || current_routes === routes.elements_dragDrop  ||current_routes === routes.elements_rangeSlider || current_routes === routes.elements_rating || current_routes === routes.elements_toastr || current_routes === routes.elements_textEditor || current_routes === routes.elements_counter || current_routes === routes.elements_scrollBar || current_routes === routes.elements_spinner || current_routes === routes.elements_notification || current_routes === routes.elements_lightBox || current_routes === routes.elements_stickyNote || current_routes === routes.elements_timeLine || current_routes === routes.elements_formWizard  ) && 'active subdrop' %>"><i data-feather="layers"></i><span>Elements</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.elements_sweetAlerts ? 'active' : '' %>" href="<%= routes.elements_sweetAlerts %>">Sweet Alerts</a></li>
+											<li><a class="<%= current_routes === routes.elements_toolTip ? 'active' : '' %>" href="<%= routes.elements_toolTip %>">Tooltip</a></li>
+											<li><a class="<%= current_routes === routes.elements_popOver ? 'active' : '' %>" href="<%= routes.elements_popOver %>">Popover</a></li>
+											<li><a class="<%= current_routes === routes.elements_ribbon ? 'active' : '' %>" href="<%= routes.elements_ribbon %>">Ribbon</a></li>
+											<li><a class="<%= current_routes === routes.elements_clipboard ? 'active' : '' %>" href="<%= routes.elements_clipboard %>">Clipboard</a></li>
+											<li><a class="<%= current_routes === routes.elements_dragDrop ? 'active' : '' %>" href="<%= routes.elements_dragDrop %>">Drag & Drop</a></li>
+											<li><a class="<%= current_routes === routes.elements_rangeSlider ? 'active' : '' %>" href="<%= routes.elements_rangeSlider %>">Range Slider</a></li>
+											<li><a class="<%= current_routes === routes.elements_rating ? 'active' : '' %>" href="<%= routes.elements_rating %>">Rating</a></li>
+											<li><a class="<%= current_routes === routes.elements_toastr ? 'active' : '' %>" href="<%= routes.elements_toastr %>">Toastr</a></li>
+											<li><a class="<%= current_routes === routes.elements_textEditor ? 'active' : '' %>" href="<%= routes.elements_textEditor %>">Text Editor</a></li>
+											<li><a class="<%= current_routes === routes.elements_counter ? 'active' : '' %>" href="<%= routes.elements_counter %>">Counter</a></li>
+											<li><a class="<%= current_routes === routes.elements_scrollBar ? 'active' : '' %>" href="<%= routes.elements_scrollBar %>">Scrollbar</a></li>
+											<li><a class="<%= current_routes === routes.elements_spinner ? 'active' : '' %>" href="<%= routes.elements_spinner %>">Spinner</a></li>
+											<li><a class="<%= current_routes === routes.elements_notification ? 'active' : '' %>" href="<%= routes.elements_notification %>">Notification</a></li>
+											<li><a class="<%= current_routes === routes.elements_lightBox ? 'active' : '' %>" href="<%= routes.elements_lightBox %>">Lightbox</a></li>
+											<li><a class="<%= current_routes === routes.elements_stickyNote ? 'active' : '' %>" href="<%= routes.elements_stickyNote %>">Sticky Note</a></li>
+											<li><a class="<%= current_routes === routes.elements_timeLine ? 'active' : '' %>" href="<%= routes.elements_timeLine %>">Timeline</a></li>
+											<li><a class="<%= current_routes === routes.elements_formWizard ? 'active' : '' %>" href="<%= routes.elements_formWizard %>">Form Wizard</a></li>
+										</ul>
+									</li>
+									<li  class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.charts_apexCharts ||current_routes === routes.charts_chartsJs ||current_routes === routes.charts_morrisCharts ||current_routes === routes.charts_flotCharts || current_routes === routes.charts_peityCharts ) && 'active subdrop'%>"><i data-feather="bar-chart-2"></i><span>Charts</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.charts_apexCharts ? 'active' : '' %>" href="<%= routes.charts_apexCharts %>">Apex Charts</a></li>
+											<li><a class="<%= current_routes === routes.charts_chartsJs ? 'active' : '' %>" href="<%= routes.charts_chartsJs %>">Chart Js</a></li>
+											<li><a class="<%= current_routes === routes.charts_morrisCharts ? 'active' : '' %>" href="<%= routes.charts_morrisCharts %>">Morris Charts</a></li>
+											<li><a class="<%= current_routes === routes.charts_flotCharts ? 'active' : '' %>" href="<%= routes.charts_flotCharts %>">Flot Charts</a></li>
+											<li><a class="<%= current_routes === routes.charts_peityCharts ? 'active' : '' %>" href="<%= routes.charts_peityCharts %>">Peity Charts</a></li>
+										</ul>
+									</li>
+									<li  class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.icons_fontAwesomeIcons || current_routes === routes.icons_featherIcons ||current_routes === routes.icons_ionicIcons || current_routes === routes.icons_materialIcons || current_routes === routes.icons_pe7Icons || current_routes === routes.icons_simpleLineIcons || current_routes === routes.icons_themifyIcons || current_routes === routes.icons_weatherIcons || current_routes === routes.icons_typiconIcons || current_routes === routes.icons_flagIcons ) && 'active subdrop' %>"><i data-feather="database"></i><span>Icons</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.icons_fontAwesomeIcons ? 'active' : '' %>" href="<%= routes.icons_fontAwesomeIcons %>">Fontawesome Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_featherIcons ? 'active' : '' %>" href="<%= routes.icons_featherIcons %>">Feather Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_ionicIcons ? 'active' : '' %>" href="<%= routes.icons_ionicIcons %>">Ionic Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_materialIcons ? 'active' : '' %>" href="<%= routes.icons_materialIcons %>">Material Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_pe7Icons ? 'active' : '' %>" href="<%= routes.icons_pe7Icons %>">Pe7 Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_simpleLineIcons ? 'active' : '' %>" href="<%= routes.icons_simpleLineIcons %>">Simpleline Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_themifyIcons ? 'active' : '' %>" href="<%= routes.icons_themifyIcons %>">Themify Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_weatherIcons ? 'active' : '' %>" href="<%= routes.icons_weatherIcons %>">Weather Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_typiconIcons ? 'active' : '' %>" href="<%= routes.icons_typiconIcons %>">Typicon Icons</a></li>
+											<li><a class="<%= current_routes === routes.icons_flagIcons ? 'active' : '' %>" href="<%= routes.icons_flagIcons %>">Flag Icons</a></li>
+										</ul>
+									</li>
+									<li  class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.form_basicInputs || current_routes === routes.form_inputGroups || current_routes === routes.form_horizontalForm || current_routes === routes.form_verticalForm || current_routes === routes.form_formMask ||  current_routes === routes.form_formValidation || current_routes === routes.form_formSelected2 || current_routes === routes.form_fileUpload ) && 'active subdrop' %>"><i data-feather="edit"></i><span>Forms</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.form_basicInputs ? 'active' : '' %>" href="<%= routes.form_basicInputs %>">Basic Inputs </a></li>
+											<li><a class="<%= current_routes === routes.form_inputGroups ? 'active' : '' %>" href="<%= routes.form_inputGroups %>">Input Groups </a></li>
+											<li><a class="<%= current_routes === routes.form_horizontalForm ? 'active' : '' %>" href="<%= routes.form_horizontalForm %>">Horizontal Form </a></li>
+											<li><a class="<%= current_routes === routes.form_verticalForm ? 'active' : '' %>" href="<%= routes.form_verticalForm %>"> Vertical Form </a></li>
+											<li><a class="<%= current_routes === routes.form_formMask ? 'active' : '' %>" href="<%= routes.form_formMask %>">Form Mask </a></li>
+											<li><a class="<%= current_routes === routes.form_formValidation ? 'active' : '' %>" href="<%= routes.form_formValidation %>">Form Validation </a></li>
+											<li><a class="<%= current_routes === routes.form_formSelected2 ? 'active' : '' %>" href="<%= routes.form_formSelected2 %>">Form Select2 </a></li>
+											<li><a class="<%= current_routes === routes.form_fileUpload ? 'active' : '' %>" href="<%= routes.form_fileUpload %>">File Upload </a></li>
+										</ul>
+									</li>
+									<li  class="submenu">
+										<a href="javascript:void(0);" class="<%= (current_routes === routes.table_basicTable ||current_routes === routes.table_dataTable ) && 'active subdrop' %>"><i data-feather="columns"></i><span>Tables</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.table_basicTable ? 'active' : '' %>" href="<%= routes.table_basicTable  %>">Basic Tables </a></li>
+											<li><a class="<%= current_routes === routes.table_dataTable ? 'active' : '' %>" href="<%= routes.table_dataTable %>">Data Table </a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="submenu-open">
+								<h6 class="submenu-hdr">Settings</h6>		
+								<ul>
+									<li class="submenu">
+										<a href="javascript:void(0);" class="<%= ( current_routes === routes.setting_generalSetting || current_routes === routes.setting_emailSetting || current_routes === routes.setting_paymentSetting || current_routes === routes.setting_currencySetting || current_routes === routes.setting_groupPermission || current_routes === routes.setting_createPermission || current_routes === routes.setting_editPermission || current_routes === routes.setting_taxRates ) && 'active subdrop'%>"><i data-feather="settings"></i><span>Settings</span><span class="menu-arrow"></span></a>
+										<ul>
+											<li><a class="<%= current_routes === routes.setting_generalSetting ? 'active' : '' %>" href="<%= routes.setting_generalSetting %>">General Settings</a></li>
+											<li><a class="<%= current_routes === routes.setting_emailSetting ? 'active' : '' %>" href="<%= routes.setting_emailSetting %>">Email Settings</a></li>
+											<li><a class="<%= current_routes === routes.setting_paymentSetting ? 'active' : '' %>" href="<%= routes.setting_paymentSetting %>">Payment Settings</a></li>
+											<li><a class="<%= current_routes === routes.setting_currencySetting ? 'active' : '' %>" href="<%= routes.setting_currencySetting %>">Currency Settings</a></li>
+											<li><a class="<%= (current_routes === routes.setting_groupPermission || current_routes === routes.setting_createPermission || current_routes === routes.setting_editPermission ) ? 'active' : '' %>" href="<%= routes.setting_groupPermission %>">Group Permissions</a></li>
+											<li><a class="<%= current_routes === routes.setting_taxRates ? 'active' : '' %>" href="<%= routes.setting_taxRates %>">Tax Rates</a></li>
+										</ul>
+									</li>
+									<li>
+										<a href="signin" ><i data-feather="log-out"></i><span>Logout</span> </a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- /Sidebar -->
