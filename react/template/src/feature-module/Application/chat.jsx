@@ -7,7 +7,7 @@ import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { all_routes } from "../../Router/all_routes";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-const chat = () => {
+const Chat = () => {
 
   const [isShow, setShow] = useState(false);
 
@@ -2960,4 +2960,4 @@ const chat = () => {
   );
 };
 
-export default chat;
+export default Chat;
