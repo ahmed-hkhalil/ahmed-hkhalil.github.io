@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { getProducts, saveSale } from '../../core/supabaseClient'
 import ImageWithBasePath from '../../core/img/imagewithbasebath'
 import { RefreshCcw, RotateCw, ShoppingCart } from 'feather-icons-react/build/IconComponents'
 import { Check, CheckCircle, Edit, MoreVertical, Trash2, UserPlus } from 'react-feather'
@@ -63,48 +64,129 @@ const Pos = () => {
     { value: 'grams', label: 'Grams' },
   ];
   const [quantity, setQuantity] = useState(4);
-
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
-  };
   const [quantity1, setQuantity1] = useState(3);
-
-  const handleDecrement1 = () => {
-    if (quantity1 > 1) {
-      setQuantity1(quantity1 - 1);
-    }
-  };
-
-  const handleIncrement1 = () => {
-    setQuantity1(quantity1 + 1);
-  };
   const [quantity2, setQuantity2] = useState(3);
-
-  const handleDecrement2 = () => {
-    if (quantity2 > 1) {
-      setQuantity2(quantity2 - 1);
-    }
-  };
-
-  const handleIncrement2 = () => {
-    setQuantity2(quantity2 + 1);
-  };
   const [quantity3, setQuantity3] = useState(1);
 
-  const handleDecrement3 = () => {
-    if (quantity3 > 1) {
-      setQuantity3(quantity3 - 1);
+  const handleDecrement = () => { if (quantity > 1) setQuantity(quantity - 1); };
+  const handleIncrement = () => { setQuantity(quantity + 1); };
+  const handleDecrement1 = () => { if (quantity1 > 1) setQuantity1(quantity1 - 1); };
+  const handleIncrement1 = () => { setQuantity1(quantity1 + 1); };
+  const handleDecrement2 = () => { if (quantity2 > 1) setQuantity2(quantity2 - 1); };
+  const handleIncrement2 = () => { setQuantity2(quantity2 + 1); };
+  const handleDecrement3 = () => { if (quantity3 > 1) setQuantity3(quantity3 - 1); };
+  const handleIncrement3 = () => { setQuantity3(quantity3 + 1); };
+
+  // Supabase Dynamic State
+  const [dbProducts, setDbProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [cart, setCart] = useState([]);
+  const [activePaymentMethod, setActivePaymentMethod] = useState("Cash");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+    async function loadData() {
+      try {
+        setLoadingProducts(true);
+        const data = await getProducts();
+        if (isMounted) {
+          setDbProducts(data || []);
+        }
+      } catch (err) {
+        console.error("Error loading products:", err);
+      } finally {
+        if (isMounted) setLoadingProducts(false);
+      }
+    }
+    loadData();
+    return () => { isMounted = false; };
+  }, []);
+
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingIndex = prevCart.findIndex((item) => item.id === product.id);
+      if (existingIndex > -1) {
+        const updated = [...prevCart];
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          qty: updated[existingIndex].qty + 1,
+        };
+        return updated;
+      }
+      return [...prevCart, { ...product, qty: 1 }];
+    });
+  };
+
+  const updateQty = (productId, delta) => {
+    setCart((prevCart) =>
+      prevCart
+        .map((item) => {
+          if (item.id === productId) {
+            const newQty = item.qty + delta;
+            return newQty > 0 ? { ...item, qty: newQty } : null;
+          }
+          return item;
+        })
+        .filter(Boolean)
+    );
+  };
+
+  const removeFromCart = (productId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
+
+  const clearCart = () => setCart([]);
+
+  const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) || 0) * item.qty, 0);
+  const taxAmount = subtotal * 0.05;
+  const grandTotal = subtotal + taxAmount;
+
+  const handleCompleteSale = async (paymentType = activePaymentMethod) => {
+    if (cart.length === 0) {
+      MySwal.fire({
+        icon: 'warning',
+        title: 'Cart is empty',
+        text: 'Please tap a product to add it to your order before checkout.',
+      });
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      await saveSale({
+        cashierName: "Cashier (Online)",
+        totalAmount: grandTotal,
+        paymentMethod: paymentType || "Cash",
+        items: cart.map(item => ({
+          id: item.id,
+          sku: item.sku,
+          name: item.name,
+          price: item.price,
+          qty: item.qty,
+          subtotal: parseFloat(item.price) * item.qty
+        })),
+      });
+
+      MySwal.fire({
+        icon: 'success',
+        title: 'Payment Successful!',
+        html: `<p class="text-success fw-bold">Order successfully saved to Supabase!</p><p>Total Paid: <strong>$${grandTotal.toFixed(2)}</strong> (${paymentType})</p>`,
+        confirmButtonText: 'Next Customer / Order',
+        confirmButtonColor: '#28a745'
+      });
+      clearCart();
+    } catch (err) {
+      MySwal.fire({
+        icon: 'error',
+        title: 'Payment Failed',
+        text: err.message || 'Could not save transaction to database.',
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleIncrement3 = () => {
-    setQuantity3(quantity3 + 1);
-  };
 
 
   const renderTooltip = (props) => (
@@ -341,1293 +423,55 @@ const Pos = () => {
                   <div className="tabs_container">
                     <div className="tab_content active" data-tab="all">
                       <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-01.png"
-                                alt="Products"
-                              />
-                              <span>
-                         
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IPhone 14 64GB</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>30 Pcs</span>
-                              <p>$15800</p>
+                        {loadingProducts ? (
+                          <div className="col-12 text-center py-5">
+                            <div className="spinner-border text-primary" role="status">
+                              <span className="visually-hidden">Loading products from Supabase...</span>
                             </div>
+                            <p className="mt-2 text-muted fw-semibold">Loading live catalog from Supabase database...</p>
                           </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-02.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">MacBook Pro</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>140 Pcs</span>
-                              <p>$1000</p>
-                            </div>
+                        ) : dbProducts.length === 0 ? (
+                          <div className="col-12 text-center py-5">
+                            <p className="text-muted">No products found in database.</p>
                           </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-03.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Rolex Tribute V3</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>220 Pcs</span>
-                              <p>$6800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-04.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Red Nike Angelo</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-05.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Airpod 2</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$5478</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-06.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Blue White OGR</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>54 Pcs</span>
-                              <p>$987</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-07.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 5 Gen 7</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>74 Pcs</span>
-                              <p>$1454</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-08.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">SWAGME</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$6587</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-09.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Timex Black SIlver</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>24 Pcs</span>
-                              <p>$1457</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-10.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Tablet 1.02 inch</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$4744</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-11.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Fossil Pair Of 3 in 1 </Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>40 Pcs</span>
-                              <p>$789</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-18.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Green Nike Fe</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7847</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="headphones">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-05.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Airpod 2</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$5478</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-08.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">SWAGME</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$6587</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="shoes">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-04.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Red Nike Angelo</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-06.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Blue White OGR</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>54 Pcs</span>
-                              <p>$987</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-18.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Green Nike Fe</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7847</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="mobiles">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-01.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IPhone 14 64GB</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>30 Pcs</span>
-                              <p>$15800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-14.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Iphone 11</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$3654</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="watches">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-03.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Rolex Tribute V3</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>220 Pcs</span>
-                              <p>$6800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-09.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Timex Black SIlver</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>24 Pcs</span>
-                              <p>$1457</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-11.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Fossil Pair Of 3 in 1 </Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>40 Pcs</span>
-                              <p>$789</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="laptops">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-02.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">MacBook Pro</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>140 Pcs</span>
-                              <p>$1000</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-07.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 5 Gen 7</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>74 Pcs</span>
-                              <p>$1454</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-10.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Tablet 1.02 inch</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$4744</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-13.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Yoga Book 9i</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>65 Pcs</span>
-                              <p>$4784</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-14.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 3i</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$1245</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="allcategory">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-01.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IPhone 14 64GB</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>30 Pcs</span>
-                              <p>$15800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-02.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">MacBook Pro</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>140 Pcs</span>
-                              <p>$1000</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-03.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Rolex Tribute V3</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>220 Pcs</span>
-                              <p>$6800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-04.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Red Nike Angelo</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-05.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Airpod 2</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$5478</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-06.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Blue White OGR</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>54 Pcs</span>
-                              <p>$987</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-07.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 5 Gen 7</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>74 Pcs</span>
-                              <p>$1454</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-08.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">SWAGME</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$6587</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-09.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Timex Black SIlver</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>24 Pcs</span>
-                              <p>$1457</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-10.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Tablet 1.02 inch</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$4744</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-11.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Fossil Pair Of 3 in 1 </Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>40 Pcs</span>
-                              <p>$789</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-18.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Green Nike Fe</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7847</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="headphone">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-05.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Airpod 2</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$5478</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-08.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Headphones</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">SWAGME</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$6587</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="shoe">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-04.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Red Nike Angelo</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-06.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Blue White OGR</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>54 Pcs</span>
-                              <p>$987</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-18.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Shoes</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Green Nike Fe</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>78 Pcs</span>
-                              <p>$7847</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="mobile">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-01.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IPhone 14 64GB</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>30 Pcs</span>
-                              <p>$15800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-14.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Mobiles</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Iphone 11</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$3654</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="watche">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-03.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Rolex Tribute V3</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>220 Pcs</span>
-                              <p>$6800</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-09.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Timex Black SIlver</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>24 Pcs</span>
-                              <p>$1457</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-11.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Watches</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Fossil Pair Of 3 in 1 </Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>40 Pcs</span>
-                              <p>$789</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="tab_content" data-tab="laptop">
-                      <div className="row">
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-02.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">MacBook Pro</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>140 Pcs</span>
-                              <p>$1000</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-07.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 5 Gen 7</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>74 Pcs</span>
-                              <p>$1454</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-10.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Computer</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Tablet 1.02 inch</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>14 Pcs</span>
-                              <p>$4744</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-13.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">Yoga Book 9i</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>65 Pcs</span>
-                              <p>$4784</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-2 col-md-6 col-lg-3 col-xl-3 pe-2">
-                          <div className="product-info default-cover card">
-                            <Link to="#" className="img-bg">
-                              <ImageWithBasePath
-                                src="assets/img/products/pos-product-14.png"
-                                alt="Products"
-                              />
-                              <span>
-                                <Check className="feather-16"/>
-                              </span>
-                            </Link>
-                            <h6 className="cat-name">
-                              <Link to="#">Laptop</Link>
-                            </h6>
-                            <h6 className="product-name">
-                              <Link to="#">IdeaPad Slim 3i</Link>
-                            </h6>
-                            <div className="d-flex align-items-center justify-content-between price">
-                              <span>47 Pcs</span>
-                              <p>$1245</p>
-                            </div>
-                          </div>
-                        </div>
+                        ) : (
+                          dbProducts.map((prod, idx) => {
+                            const imgNum = String((idx % 14) + 1).padStart(2, '0');
+                            const inCart = cart.find((c) => c.id === prod.id);
+                            return (
+                              <div
+                                key={prod.id || idx}
+                                className="col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-3"
+                                onClick={() => addToCart(prod)}
+                                style={{ cursor: "pointer" }}
+                              >
+                                <div className={`product-info default-cover card h-100 mb-0 ${inCart ? "border-primary shadow-sm" : ""}`}>
+                                  <div className="img-bg position-relative text-center p-2">
+                                    <ImageWithBasePath
+                                      src={`assets/img/products/pos-product-${imgNum}.png`}
+                                      alt={prod.name}
+                                    />
+                                    {inCart && (
+                                      <span className="badge bg-success position-absolute top-0 end-0 m-2 fs-12">
+                                        ✓ {inCart.qty} in cart
+                                      </span>
+                                    )}
+                                  </div>
+                                  <h6 className="cat-name text-muted fs-12 px-2 mt-1">
+                                    {prod.sku || "GENERAL"}
+                                  </h6>
+                                  <h6 className="product-name px-2 fw-bold" style={{ minHeight: "40px" }}>
+                                    <span title={prod.name}>{prod.name}</span>
+                                  </h6>
+                                  <div className="d-flex align-items-center justify-content-between price px-2 pb-2 mt-auto">
+                                    <span className="text-muted fs-12">Stock: {prod.stock || 0}</span>
+                                    <p className="fw-bold text-primary fs-16 mb-0">${parseFloat(prod.price).toFixed(2)}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1680,7 +524,7 @@ const Pos = () => {
                 <div className="product-added block-section">
                   <div className="head-text d-flex align-items-center justify-content-between">
                     <h6 className="d-flex align-items-center mb-0">
-                      Product Added<span className="count">2</span>
+                      Product Added<span className="count">{cart.length}</span>
                     </h6>
                     <Link
                       to="#"
@@ -1692,439 +536,140 @@ const Pos = () => {
                       Clear all
                     </Link>
                   </div>
-                  <div className="product-wrap">
-                    <div className="product-list d-flex align-items-center justify-content-between">
-                      <div
-                        className="d-flex align-items-center product-info"
-                        data-bs-toggle="modal"
-                        data-bs-target="#products"
-                      >
-                        <Link to="#" className="img-bg">
-                          <ImageWithBasePath
-                            src="assets/img/products/pos-product-16.png"
-                            alt="Products"
-                          />
-                        </Link>
-                        <div className="info">
-                          <span>PT0005</span>
-                          <h6>
-                            <Link to="#">Red Nike Laser</Link>
-                          </h6>
-                          <p>$2000</p>
-                        </div>
+                  <div className="product-wrap" style={{ maxHeight: "350px", overflowY: "auto" }}>
+                    {cart.length === 0 ? (
+                      <div className="text-center py-5 text-muted">
+                        <i data-feather="shopping-cart" className="feather-32 mb-2 d-block mx-auto" />
+                        <p className="mb-0 fw-semibold">Cart is currently empty</p>
+                        <small className="text-muted">Tap any product on the left to add items</small>
                       </div>
-                      <div className="qty-item text-center">
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-minus">Minus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="dec d-flex justify-content-center align-items-center"
-                            onClick={handleDecrement}
-                          >
-                            <MinusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-
-                        <input
-                          type="text"
-                          className="form-control text-center"
-                          name="qty"
-                          value={quantity}
-                          readOnly
-                        />
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-plus">Plus</Tooltip>}
-                        >
-                          <Link
-                            to="#" onClick={handleIncrement}
-                            className="inc d-flex justify-content-center align-items-center"
-                            data-bs-toggle="tooltip"
-                            data-bs-placement="top"
-                            title="plus"
-                          >
-                            <PlusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-                      </div>
-                      <div className="d-flex align-items-center action">
-                        <Link
-                          className="btn-icon edit-icon me-2"
-                          to="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-product"
-                        >
-                          <Edit className="feather-14" />
-                        </Link>
-                        <Link onClick={showConfirmationAlert}
-                          className="btn-icon delete-icon confirm-text"
-                          to="#"
-                        >
-                          <Trash2 className="feather-14" />
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="product-list d-flex align-items-center justify-content-between">
-                      <div
-                        className="d-flex align-items-center product-info"
-                        data-bs-toggle="modal"
-                        data-bs-target="#products"
-                      >
-                        <Link to="#" className="img-bg">
-                          <ImageWithBasePath
-                            src="assets/img/products/pos-product-17.png"
-                            alt="Products"
-                          />
-                        </Link>
-                        <div className="info">
-                          <span>PT0235</span>
-                          <h6>
-                            <Link to="#">Iphone 14</Link>
-                          </h6>
-                          <p>$3000</p>
-                        </div>
-                      </div>
-                      <div className="qty-item text-center">
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-minus">Minus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="dec d-flex justify-content-center align-items-center"
-                            onClick={handleDecrement1}
-                          >
-                            <MinusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-
-                        <input
-                          type="text"
-                          className="form-control text-center"
-                          name="qty"
-                          value={quantity1}
-                          readOnly
-                        />
-
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-plus">Plus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="inc d-flex justify-content-center align-items-center"
-                            onClick={handleIncrement1}
-                          >
-                            <PlusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-                      </div>
-                      <div className="d-flex align-items-center action">
-                        <Link
-                          className="btn-icon edit-icon me-2"
-                          to="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-product"
-                        >
-                          <Edit className="feather-14" />
-                        </Link>
-                        <Link onClick={showConfirmationAlert}
-                          className="btn-icon delete-icon confirm-text"
-                          to="#"
-                        >
-                          <Trash2 className="feather-14" />
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="product-list d-flex align-items-center justify-content-between">
-                      <div
-                        className="d-flex align-items-center product-info"
-                        data-bs-toggle="modal"
-                        data-bs-target="#products"
-                      >
-                        <Link to="#" className="img-bg">
-                          <ImageWithBasePath
-                            src="assets/img/products/pos-product-16.png"
-                            alt="Products"
-                          />
-                        </Link>
-                        <div className="info">
-                          <span>PT0005</span>
-                          <h6>
-                            <Link to="#">Red Nike Laser</Link>
-                          </h6>
-                          <p>$2000</p>
-                        </div>
-                      </div>
-
-                      <div className="qty-item text-center">
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-minus">Minus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="dec d-flex justify-content-center align-items-center"
-                            onClick={handleDecrement2}
-                          >
-                            <MinusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-
-                        <input
-                          type="text"
-                          className="form-control text-center"
-                          name="qty"
-                          value={quantity2}
-                          readOnly
-                        />
-
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-plus">Plus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="inc d-flex justify-content-center align-items-center"
-                            onClick={handleIncrement2}
-                          >
-                            <PlusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-                      </div>
-
-                      <div className="d-flex align-items-center action">
-                        <Link
-                          className="btn-icon edit-icon me-2"
-                          to="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-product"
-                        >
-                          <Edit className="feather-14" />
-                        </Link>
-                        <Link className="btn-icon delete-icon confirm-text" to="#" onClick={showConfirmationAlert}>
-                          <Trash2 className="feather-14" />
-                        </Link>
-                      </div>
-                    </div>
-                    <div className="product-list d-flex align-items-center justify-content-between">
-                      <div
-                        className="d-flex align-items-center product-info"
-                        data-bs-toggle="modal"
-                        data-bs-target="#products"
-                      >
-                        <Link to="#" className="img-bg">
-                          <ImageWithBasePath
-                            src="assets/img/products/pos-product-17.png"
-                            alt="Products"
-                          />
-                        </Link>
-                        <div className="info">
-                          <span>PT0005</span>
-                          <h6>
-                            <Link to="#">Red Nike Laser</Link>
-                          </h6>
-                          <p>$2000</p>
-                        </div>
-                      </div>
-
-                      <div className="qty-item text-center">
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-minus">Minus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="dec d-flex justify-content-center align-items-center"
-                            onClick={handleDecrement3}
-                          >
-                            <MinusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-
-                        <input
-                          type="text"
-                          className="form-control text-center"
-                          name="qty"
-                          value={quantity3}
-                          readOnly
-                        />
-
-                        <OverlayTrigger
-                          placement="top"
-                          overlay={<Tooltip id="tooltip-plus">Plus</Tooltip>}
-                        >
-                          <Link
-                            to="#"
-                            className="inc d-flex justify-content-center align-items-center"
-                            onClick={handleIncrement3}
-                          >
-                            <PlusCircle className="feather-14" />
-                          </Link>
-                        </OverlayTrigger>
-                      </div>
-
-                      <div className="d-flex align-items-center action">
-                        <Link
-                          className="btn-icon edit-icon me-2"
-                          to="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit-product"
-                        >
-                          <i data-feather="edit" className="feather-14" />
-                          <Edit className="feather-14" />
-                        </Link>
-                        <Link className="btn-icon delete-icon confirm-text" to="#" onClick={showConfirmationAlert}>
-                          <Trash2 className='feather-14' />
-                        </Link>
-                      </div>
-                    </div>
+                    ) : (
+                      cart.map((item, idx) => {
+                        const imgNum = String((idx % 14) + 1).padStart(2, '0');
+                        return (
+                          <div key={item.id || idx} className="product-list d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
+                            <div className="d-flex align-items-center product-info">
+                              <div className="img-bg me-2">
+                                <ImageWithBasePath
+                                  src={`assets/img/products/pos-product-${imgNum}.png`}
+                                  alt={item.name}
+                                  width={40}
+                                  height={40}
+                                />
+                              </div>
+                              <div className="info">
+                                <span className="text-muted fs-11">{item.sku || "SKU"}</span>
+                                <h6 className="mb-0 fs-13" title={item.name}>{item.name}</h6>
+                                <p className="mb-0 text-primary fw-bold fs-13">${parseFloat(item.price).toFixed(2)}</p>
+                              </div>
+                            </div>
+                            <div className="qty-item text-center d-flex align-items-center">
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-light border p-1 me-1"
+                                onClick={() => updateQty(item.id, -1)}
+                              >
+                                <MinusCircle className="feather-14" />
+                              </button>
+                              <span className="fw-bold px-2 fs-14">{item.qty}</span>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-light border p-1 ms-1"
+                                onClick={() => updateQty(item.id, 1)}
+                              >
+                                <PlusCircle className="feather-14" />
+                              </button>
+                            </div>
+                            <div className="d-flex align-items-center action ms-2">
+                              <span className="fw-bold me-2 fs-13">
+                                ${(parseFloat(item.price) * item.qty).toFixed(2)}
+                              </span>
+                              <button
+                                type="button"
+                                className="btn btn-sm btn-outline-danger border-0 p-1"
+                                onClick={() => removeFromCart(item.id)}
+                              >
+                                <Trash2 className="feather-14" />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
-                </div>
-                <div className="block-section">
-                  <div className="selling-info">
-                    <div className="row">
-                      <div className="col-12 col-sm-4">
-                        <div className="input-block">
-                          <label>Order Tax</label>
-                          <Select
-                            className="select"
-                            options={gst}
-                            placeholder="GST 5%"
-                          />
 
-                        </div>
-                      </div>
-                      <div className="col-12 col-sm-4">
-                        <div className="input-block">
-                          <label>Shipping</label>
-                          <Select
-                            className="select"
-                            options={shipping}
-                            placeholder="15"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-12 col-sm-4">
-                        <div className="input-block">
-                          <label>Discount</label>
-                          <Select
-                            className="select"
-                            options={discount}
-                            placeholder="10%"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="order-total">
-                    <table className="table table-responsive table-borderless">
+                  <div className="order-total mt-3">
+                    <table className="table table-responsive table-borderless mb-2">
                       <tbody>
                         <tr>
-                          <td>Sub Total</td>
-                          <td className="text-end">$60,454</td>
+                          <td className="text-muted">Sub Total</td>
+                          <td className="text-end fw-semibold">${subtotal.toFixed(2)}</td>
                         </tr>
                         <tr>
-                          <td>Tax (GST 5%)</td>
-                          <td className="text-end">$40.21</td>
+                          <td className="text-muted">Tax (GST 5%)</td>
+                          <td className="text-end text-muted">${taxAmount.toFixed(2)}</td>
                         </tr>
-                        <tr>
-                          <td>Shipping</td>
-                          <td className="text-end">$40.21</td>
-                        </tr>
-                        <tr>
-                          <td>Sub Total</td>
-                          <td className="text-end">$60,454</td>
-                        </tr>
-                        <tr>
-                          <td className="danger">Discount (10%)</td>
-                          <td className="danger text-end">$15.21</td>
-                        </tr>
-                        <tr>
-                          <td>Total</td>
-                          <td className="text-end">$64,024.5</td>
+                        <tr className="border-top">
+                          <td className="fw-bold fs-16">Grand Total</td>
+                          <td className="text-end fw-bold text-success fs-18">${grandTotal.toFixed(2)}</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
-                <div className="block-section payment-method">
-                  <h6>Payment Method</h6>
-                  <div className="row d-flex align-items-center justify-content-center methods">
-                    <div className="col-md-6 col-lg-4 item">
-                      <div className="default-cover">
-                        <Link to="#">
-                          <ImageWithBasePath
-                            src="assets/img/icons/cash-pay.svg"
-                            alt="Payment Method"
-                          />
-                          <span>Cash</span>
-                        </Link>
+
+                <div className="block-section payment-method pt-2">
+                  <h6 className="mb-2">Select Payment Method</h6>
+                  <div className="row d-flex align-items-center justify-content-center methods g-2">
+                    <div className="col-4 item" onClick={() => setActivePaymentMethod("Cash")} style={{ cursor: "pointer" }}>
+                      <div className={`default-cover p-2 text-center rounded border ${activePaymentMethod === "Cash" ? "border-success bg-light text-success fw-bold shadow-sm" : "bg-white"}`}>
+                        <ImageWithBasePath src="assets/img/icons/cash-pay.svg" alt="Cash" width={24} height={24} />
+                        <span className="d-block mt-1 fs-12">Cash</span>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-4 item">
-                      <div className="default-cover">
-                        <Link to="#">
-                          <ImageWithBasePath
-                            src="assets/img/icons/credit-card.svg"
-                            alt="Payment Method"
-                          />
-                          <span>Debit Card</span>
-                        </Link>
+                    <div className="col-4 item" onClick={() => setActivePaymentMethod("Card")} style={{ cursor: "pointer" }}>
+                      <div className={`default-cover p-2 text-center rounded border ${activePaymentMethod === "Card" ? "border-success bg-light text-success fw-bold shadow-sm" : "bg-white"}`}>
+                        <ImageWithBasePath src="assets/img/icons/credit-card.svg" alt="Card" width={24} height={24} />
+                        <span className="d-block mt-1 fs-12">Card</span>
                       </div>
                     </div>
-                    <div className="col-md-6 col-lg-4 item">
-                      <div className="default-cover">
-                        <Link to="#">
-                          <ImageWithBasePath
-                            src="assets/img/icons/qr-scan.svg"
-                            alt="Payment Method"
-                          />
-                          <span>Scan</span>
-                        </Link>
+                    <div className="col-4 item" onClick={() => setActivePaymentMethod("Scan / QR")} style={{ cursor: "pointer" }}>
+                      <div className={`default-cover p-2 text-center rounded border ${activePaymentMethod === "Scan / QR" ? "border-success bg-light text-success fw-bold shadow-sm" : "bg-white"}`}>
+                        <ImageWithBasePath src="assets/img/icons/qr-scan.svg" alt="Scan" width={24} height={24} />
+                        <span className="d-block mt-1 fs-12">Scan / QR</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="d-grid btn-block">
-                  <Link className="btn btn-secondary" to="#">
-                    Grand Total : $64,024.5
-                  </Link>
+
+                <div className="d-grid btn-block mt-3">
+                  <div className="btn btn-secondary fs-16 fw-bold py-2">
+                    Pay Amount: ${grandTotal.toFixed(2)}
+                  </div>
                 </div>
-                <div className="btn-row d-sm-flex align-items-center justify-content-between">
-                  <Link
-                    to="#"
-                    className="btn btn-info btn-icon flex-fill"
-                    data-bs-toggle="modal"
-                    data-bs-target="#hold-order"
+
+                <div className="btn-row d-flex align-items-center justify-content-between mt-2 gap-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger flex-fill py-2"
+                    onClick={clearCart}
+                    disabled={cart.length === 0}
                   >
-                    <span className="me-1 d-flex align-items-center">
-                      <i data-feather="pause" className="feather-16" />
-                    </span>
-                    Hold
-                  </Link>
-                  <Link
-                    to="#"
-                    className="btn btn-danger btn-icon flex-fill"
+                    <Trash2 className="feather-16 me-1" />
+                    Clear
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-success flex-fill py-2 fw-bold"
+                    onClick={() => handleCompleteSale(activePaymentMethod)}
+                    disabled={cart.length === 0 || isSubmitting}
                   >
-                    <span className="me-1 d-flex align-items-center">
-                      <i data-feather="trash-2" className="feather-16" />
-                    </span>
-                    Void
-                  </Link>
-                  <Link
-                    to="#"
-                    className="btn btn-success btn-icon flex-fill"
-                    data-bs-toggle="modal"
-                    data-bs-target="#payment-completed"
-                  >
-                    <span className="me-1 d-flex align-items-center">
-                      <i data-feather="credit-card" className="feather-16" />
-                    </span>
-                    Payment
-                  </Link>
+                    {isSubmitting ? (
+                      <span><span className="spinner-border spinner-border-sm me-1" />Saving...</span>
+                    ) : (
+                      <span><i data-feather="check-circle" className="feather-16 me-1" />Complete Sale</span>
+                    )}
+                  </button>
                 </div>
               </aside>
             </div>
