@@ -193,6 +193,10 @@ import TaxRates from "../feature-module/settings/financialsettings/taxrates";
 import CurrencySettings from "../feature-module/settings/financialsettings/currencysettings";
 import WareHouses from "../core/modals/peoples/warehouses";
 import Coupons from "../feature-module/coupons/coupons";
+import FuelDashboard from "../feature-module/fuelstation/fueldashboard";
+import FuelPumps from "../feature-module/fuelstation/fuelpumps";
+import FuelTanks from "../feature-module/fuelstation/fueltanks";
+import FuelMeters from "../feature-module/fuelstation/fuelmeters";
 import { all_routes } from "./all_routes";
 export const publicRoutes = [
   {
@@ -200,6 +204,41 @@ export const publicRoutes = [
     path: routes.dashboard,
     name: "home",
     element: <Dashboard />,
+    route: Route,
+  },
+  {
+    id: "admin-alias",
+    path: "/admin",
+    name: "admin",
+    element: <Dashboard />,
+    route: Route,
+  },
+  {
+    id: "fuel-1",
+    path: routes.fueldashboard,
+    name: "fueldashboard",
+    element: <FuelDashboard />,
+    route: Route,
+  },
+  {
+    id: "fuel-2",
+    path: routes.fuelpumps,
+    name: "fuelpumps",
+    element: <FuelPumps />,
+    route: Route,
+  },
+  {
+    id: "fuel-3",
+    path: routes.fueltanks,
+    name: "fueltanks",
+    element: <FuelTanks />,
+    route: Route,
+  },
+  {
+    id: "fuel-4",
+    path: routes.fuelmeters,
+    name: "fuelmeters",
+    element: <FuelMeters />,
     route: Route,
   },
   {

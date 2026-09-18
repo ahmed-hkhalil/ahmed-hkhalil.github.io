@@ -632,8 +632,8 @@ const Header = () => {
                     <span className="status online" />
                   </span>
                   <div className="profilesets">
-                    <h6>John Smilga</h6>
-                    <h5>Super Admin</h5>
+                    <h6>{localStorage.getItem("userName") || "Store Admin"}</h6>
+                    <h5>{localStorage.getItem("userRole") === "cashier" ? "Cashier" : "Super Admin"}</h5>
                   </div>
                 </div>
                 <hr className="m-0" />
@@ -645,7 +645,15 @@ const Header = () => {
                   Settings
                 </Link>
                 <hr className="m-0" />
-                <Link className="dropdown-item logout pb-0" to="/signin">
+                <Link
+                  className="dropdown-item logout pb-0"
+                  to="/"
+                  onClick={() => {
+                    localStorage.removeItem("authenticated");
+                    localStorage.removeItem("userRole");
+                    localStorage.removeItem("userName");
+                  }}
+                >
                   <ImageWithBasePath
                     src="assets/img/icons/log-out.svg"
                     alt="img"
@@ -675,7 +683,15 @@ const Header = () => {
             <Link className="dropdown-item" to="generalsettings">
               Settings
             </Link>
-            <Link className="dropdown-item" to="signin">
+            <Link
+              className="dropdown-item"
+              to="/"
+              onClick={() => {
+                localStorage.removeItem("authenticated");
+                localStorage.removeItem("userRole");
+                localStorage.removeItem("userName");
+              }}
+            >
               Logout
             </Link>
           </div>

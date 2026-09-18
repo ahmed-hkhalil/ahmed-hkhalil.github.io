@@ -17,7 +17,7 @@ export const SidebarData = [
             showSubRoute: false,
 
             submenuItems: [
-              { label: "Admin Dashboard", link: "/" },
+              { label: "Admin Dashboard", link: "/dashboard" },
               { label: "Sales Dashboard", link: "/sales-dashboard" }
             ]
           },
@@ -48,6 +48,26 @@ export const SidebarData = [
             },
               { label: "File Manager", link: "/file-manager", showSubRoute: false,
             }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Fuel Station",
+        submenuOpen: true,
+        showSubRoute: false,
+        submenuHdr: "Fuel Station",
+        submenuItems: [
+          {
+            label: "Fuel Management",
+            icon: <Icon.Droplet />,
+            submenu: true,
+            showSubRoute: false,
+            submenuItems: [
+              { label: "Fuel Dashboard", link: "/fuel-dashboard" },
+              { label: "Pumps & Dispensers", link: "/fuel-pumps" },
+              { label: "Underground Tanks", link: "/fuel-tanks" },
+              { label: "Shift Meter Readings", link: "/fuel-meters" },
             ]
           }
         ]

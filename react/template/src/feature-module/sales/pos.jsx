@@ -84,6 +84,65 @@ const Pos = () => {
   const [activePaymentMethod, setActivePaymentMethod] = useState("Cash");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Fuel Station Dispenser POS Integration
+  const [showFuelModal, setShowFuelModal] = useState(false);
+  const [selectedPump, setSelectedPump] = useState(1);
+  const [selectedFuelGrade, setSelectedFuelGrade] = useState("Gasoline 95");
+  const [fuelPricing, setFuelPricing] = useState({
+    "Gasoline 91": 2.18,
+    "Gasoline 95": 2.33,
+    "Diesel": 1.15,
+  });
+  const [presetAmount, setPresetAmount] = useState(30);
+  const [presetLiters, setPresetLiters] = useState(12.88);
+
+  const handleFuelAmountChange = (amt) => {
+    const val = parseFloat(amt) || 0;
+    setPresetAmount(val);
+    const unitPrice = fuelPricing[selectedFuelGrade] || 2.33;
+    setPresetLiters(parseFloat((val / unitPrice).toFixed(2)));
+  };
+
+  const handleFuelLitersChange = (lts) => {
+    const val = parseFloat(lts) || 0;
+    setPresetLiters(val);
+    const unitPrice = fuelPricing[selectedFuelGrade] || 2.33;
+    setPresetAmount(parseFloat((val * unitPrice).toFixed(2)));
+  };
+
+  const handleGradeChange = (grade) => {
+    setSelectedFuelGrade(grade);
+    const unitPrice = fuelPricing[grade] || 2.33;
+    setPresetLiters(parseFloat((presetAmount / unitPrice).toFixed(2)));
+  };
+
+  const addFuelToCart = () => {
+    if (presetAmount <= 0) {
+      MySwal.fire("Warning", "Please enter a valid fuel amount.", "warning");
+      return;
+    }
+    const fuelItem = {
+      id: "fuel-p" + selectedPump + "-" + Date.now(),
+      sku: "PUMP-0" + selectedPump,
+      name: "⛽ Fuel Pump #" + selectedPump + " (" + selectedFuelGrade + ", " + presetLiters + " L)",
+      price: presetAmount,
+      qty: 1,
+      isFuel: true,
+      pump: selectedPump,
+      grade: selectedFuelGrade,
+      liters: presetLiters,
+    };
+    setCart((prev) => [...prev, fuelItem]);
+    setShowFuelModal(false);
+    MySwal.fire({
+      icon: "success",
+      title: "Pump #" + selectedPump + " Fuel Added",
+      text: presetLiters + " Liters of " + selectedFuelGrade + " ($" + presetAmount.toFixed(2) + ") added to ticket.",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  };
+
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
@@ -271,7 +330,15 @@ const Pos = () => {
     <div>
       <div className="page-wrapper pos-pg-wrapper ms-0">
         <div className="content pos-design p-0">
-          <div className="btn-row d-sm-flex align-items-center">
+          <div className="btn-row d-sm-flex align-items-center gap-2 p-3 pb-0">
+            <button
+              type="button"
+              className="btn btn-success d-flex align-items-center gap-2 px-3 shadow-sm"
+              onClick={() => setShowFuelModal(true)}
+            >
+              <span>⛽</span>
+              <strong>Dispense Fuel (Pumps 1-8)</strong>
+            </button>
             <Link
               to="#"
               className="btn btn-secondary mb-xs-3"
@@ -283,12 +350,12 @@ const Pos = () => {
               </span>
               View Orders
             </Link>
-            <Link to="#" className="btn btn-info">
+            <button type="button" className="btn btn-info" onClick={clearCart}>
               <span className="me-1 d-flex align-items-center">
                 <RotateCw className="feather-16" />
               </span>
-              Reset
-            </Link>
+              Clear Cart
+            </button>
             <Link
               to="#"
               className="btn btn-primary"
@@ -300,6 +367,39 @@ const Pos = () => {
               </span>
               Transaction
             </Link>
+            <Link to="/fuel-dashboard" className="btn btn-warning text-dark">
+              <span>⛽</span> Fuel Hub
+            </Link>
+          </div>
+
+          {/* Quick Forecourt Pump Status Bar */}
+          <div className="bg-white p-2 border rounded my-2 mx-3 d-flex flex-wrap align-items-center justify-content-between gap-1 shadow-sm">
+            <span className="fw-bold small text-muted me-2">⛽ Forecourt Dispensers:</span>
+            <div className="d-flex flex-wrap gap-1 flex-grow-1">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((pId) => (
+                <button
+                  key={pId}
+                  type="button"
+                  className={`btn btn-sm py-1 px-2 ${
+                    pId === 1 || pId === 3 || pId === 7
+                      ? "btn-outline-success"
+                      : pId === 8
+                      ? "btn-outline-secondary"
+                      : "btn-outline-primary"
+                  }`}
+                  onClick={() => {
+                    setSelectedPump(pId);
+                    setShowFuelModal(true);
+                  }}
+                  title={`Open Dispenser Pump #${pId}`}
+                >
+                  <span className="fw-bold">Pump {pId}</span>{" "}
+                  <small style={{ fontSize: "11px" }}>
+                    {pId === 1 || pId === 3 || pId === 7 ? "🟢 Active" : pId === 8 ? "⚪ Off" : "🔵 Idle"}
+                  </small>
+                </button>
+              ))}
+            </div>
           </div>
           <div className="row align-items-start pos-wrapper">
             <div className="col-md-12 col-lg-8">
@@ -2692,6 +2792,164 @@ const Pos = () => {
         </div>
       </div>
       {/* /Recent Transactions */}
+
+      {/* Convenience Store Fuel Dispense Modal */}
+      {showFuelModal && (
+        <div
+          className="modal fade show d-block"
+          tabIndex="-1"
+          style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header bg-dark text-white">
+                <h5 className="modal-title text-white d-flex align-items-center gap-2">
+                  <span>⛽</span> Dispense Fuel - Convenience Store POS
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  onClick={() => setShowFuelModal(false)}
+                />
+              </div>
+              <div className="modal-body">
+                {/* Select Pump */}
+                <div className="mb-3">
+                  <label className="form-label fw-bold">Select Dispenser / Pump #</label>
+                  <div className="d-flex flex-wrap gap-2">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                      <button
+                        key={num}
+                        type="button"
+                        className={`btn btn-sm ${
+                          selectedPump === num ? "btn-primary fw-bold" : "btn-outline-secondary"
+                        }`}
+                        onClick={() => setSelectedPump(num)}
+                      >
+                        Pump #{num}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Select Grade */}
+                <div className="mb-3">
+                  <label className="form-label fw-bold">Fuel Grade</label>
+                  <div className="row g-2">
+                    <div className="col-4">
+                      <button
+                        type="button"
+                        className={`btn w-100 p-2 text-start ${
+                          selectedFuelGrade === "Gasoline 91"
+                            ? "btn-success"
+                            : "btn-outline-success"
+                        }`}
+                        onClick={() => handleGradeChange("Gasoline 91")}
+                      >
+                        <div className="fw-bold small">Unleaded 91</div>
+                        <div className="small">${fuelPricing["Gasoline 91"]}/L</div>
+                      </button>
+                    </div>
+                    <div className="col-4">
+                      <button
+                        type="button"
+                        className={`btn w-100 p-2 text-start ${
+                          selectedFuelGrade === "Gasoline 95"
+                            ? "btn-primary"
+                            : "btn-outline-primary"
+                        }`}
+                        onClick={() => handleGradeChange("Gasoline 95")}
+                      >
+                        <div className="fw-bold small">Super 95</div>
+                        <div className="small">${fuelPricing["Gasoline 95"]}/L</div>
+                      </button>
+                    </div>
+                    <div className="col-4">
+                      <button
+                        type="button"
+                        className={`btn w-100 p-2 text-start ${
+                          selectedFuelGrade === "Diesel"
+                            ? "btn-warning text-dark"
+                            : "btn-outline-warning text-dark"
+                        }`}
+                        onClick={() => handleGradeChange("Diesel")}
+                      >
+                        <div className="fw-bold small">Diesel</div>
+                        <div className="small">${fuelPricing["Diesel"]}/L</div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Preset Amount */}
+                <div className="mb-3">
+                  <div className="d-flex justify-content-between align-items-center mb-1">
+                    <label className="form-label fw-bold mb-0">Dispense Amount ($)</label>
+                    <span className="small text-muted">
+                      = {presetLiters} Liters @ ${fuelPricing[selectedFuelGrade]}/L
+                    </span>
+                  </div>
+                  <div className="input-group mb-2">
+                    <span className="input-group-text">$</span>
+                    <input
+                      type="number"
+                      step="1"
+                      className="form-control form-control-lg fw-bold text-success"
+                      value={presetAmount}
+                      onChange={(e) => handleFuelAmountChange(e.target.value)}
+                    />
+                  </div>
+                  {/* Quick preset buttons */}
+                  <div className="d-flex gap-1 flex-wrap">
+                    {[10, 20, 30, 50, 100].map((amt) => (
+                      <button
+                        key={amt}
+                        type="button"
+                        className={`btn btn-sm ${
+                          presetAmount === amt ? "btn-secondary" : "btn-outline-secondary"
+                        }`}
+                        onClick={() => handleFuelAmountChange(amt)}
+                      >
+                        ${amt}
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-outline-info"
+                      onClick={() => handleFuelLitersChange(45)}
+                    >
+                      Full Tank (~45L)
+                    </button>
+                  </div>
+                </div>
+
+                {/* Liters Equivalent */}
+                <div className="p-3 bg-light rounded border text-center">
+                  <span className="text-muted small d-block">Authorized Fuel Volume:</span>
+                  <h3 className="text-dark fw-bold mb-0">{presetLiters} Liters</h3>
+                  <small className="text-muted">Total Due: ${presetAmount.toFixed(2)}</small>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShowFuelModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-success fw-bold"
+                  onClick={addFuelToCart}
+                >
+                  Add Fuel to POS Ticket
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
 
     </div>

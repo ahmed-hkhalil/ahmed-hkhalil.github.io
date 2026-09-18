@@ -1,5 +1,6 @@
 export const all_routes = {
-  dashboard: "/",
+  dashboard: "/dashboard",
+  admin: "/dashboard",
   productlist: "/product-list",
   addproduct: "/add-product",
   salesdashboard: "/sales-dashboard",
@@ -190,4 +191,8 @@ export const all_routes = {
   leavestype: "/leave-types",
   warehouses: "/warehouse",
   coupons:"/coupons",
+  fueldashboard: "/fuel-dashboard",
+  fuelpumps: "/fuel-pumps",
+  fueltanks: "/fuel-tanks",
+  fuelmeters: "/fuel-meters",
 };

@@ -8,8 +8,7 @@ import { useSelector } from "react-redux";
 import ThemeSettings from "../InitialPage/themeSettings";
 // import CollapsedSidebar from "../InitialPage/Sidebar/collapsedSidebar";
 import Loader from "../feature-module/loader/loader";
-// import HorizontalSidebar from "../InitialPage/Sidebar/horizontalSidebar";
-//import LoadingSpinner from "../InitialPage/Sidebar/LoadingSpinner";
+import Signin from "../feature-module/pages/login/signin";
 
 const AllRoutes = () => {
   const data = useSelector((state) => state.toggle_header);
@@ -17,13 +16,6 @@ const AllRoutes = () => {
   const HeaderLayout = () => (
     <div className={`main-wrapper ${data ? "header-collapse" : ""}`}>
       <Header />
-      {/* {layoutStyles == "collapsed" ? (
-        <CollapsedSidebar />
-      ) : layoutStyles == "horizontal" ? (
-        <HorizontalSidebar />
-      ) : (
-        <Sidebar />
-      )} */}
       <Sidebar />
       <Outlet />
       <ThemeSettings />
@@ -48,8 +40,6 @@ const AllRoutes = () => {
     </div>
   );
 
-  console.log(publicRoutes, "dashboard");
-
   return (
     <div>
       <Routes>
@@ -58,25 +48,24 @@ const AllRoutes = () => {
             <Route path={route.path} element={route.element} key={id} />
           ))}
         </Route>
-        <Route path={"/"} element={<HeaderLayout />}>
-          {publicRoutes.map((route, id) => (
-            <Route path={route.path} element={route.element} key={id} />
-          ))}
-        </Route>
 
-        <Route path={"/"} element={<Authpages />}>
+        {/* Auth routes with Signin as default landing page */}
+        <Route path="/" element={<Authpages />}>
+          <Route index element={<Signin />} />
           {pagesRoute.map((route, id) => (
             <Route path={route.path} element={route.element} key={id} />
           ))}
         </Route>
 
-        {/* <Route path={"/expenses/"} element={<HeaderLayout />}>
-          {expensesRoutes.map((route, id) => (
+        {/* Admin and feature modules */}
+        <Route path="/" element={<HeaderLayout />}>
+          {publicRoutes.map((route, id) => (
             <Route path={route.path} element={route.element} key={id} />
           ))}
-        </Route> */}
+        </Route>
       </Routes>
     </div>
   );
 };
+
 export default AllRoutes;
