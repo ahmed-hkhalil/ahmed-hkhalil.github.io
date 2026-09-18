@@ -197,6 +197,7 @@ import FuelDashboard from "../feature-module/fuelstation/fueldashboard";
 import FuelPumps from "../feature-module/fuelstation/fuelpumps";
 import FuelTanks from "../feature-module/fuelstation/fueltanks";
 import FuelMeters from "../feature-module/fuelstation/fuelmeters";
+import DailySheet from "../feature-module/fuelstation/dailysheet";
 import { all_routes } from "./all_routes";
 export const publicRoutes = [
   {
@@ -239,6 +240,20 @@ export const publicRoutes = [
     path: routes.fuelmeters,
     name: "fuelmeters",
     element: <FuelMeters />,
+    route: Route,
+  },
+  {
+    id: "sheet-1",
+    path: routes.dailysheet,
+    name: "dailysheet",
+    element: <DailySheet />,
+    route: Route,
+  },
+  {
+    id: "sheet-2",
+    path: routes.weeklysheets,
+    name: "weeklysheets",
+    element: <DailySheet />,
     route: Route,
   },
   {

@@ -195,4 +195,6 @@ export const all_routes = {
   fuelpumps: "/fuel-pumps",
   fueltanks: "/fuel-tanks",
   fuelmeters: "/fuel-meters",
+  dailysheet: "/daily-sheet",
+  weeklysheets: "/weekly-sheets",
 };

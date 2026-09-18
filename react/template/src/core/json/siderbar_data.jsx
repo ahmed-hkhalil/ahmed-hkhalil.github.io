@@ -65,6 +65,8 @@ export const SidebarData = [
             showSubRoute: false,
             submenuItems: [
               { label: "Fuel Dashboard", link: "/fuel-dashboard" },
+              { label: "Daily Cashier Sheet", link: "/daily-sheet" },
+              { label: "Weekly Reconciliation", link: "/weekly-sheets" },
               { label: "Pumps & Dispensers", link: "/fuel-pumps" },
               { label: "Underground Tanks", link: "/fuel-tanks" },
               { label: "Shift Meter Readings", link: "/fuel-meters" },

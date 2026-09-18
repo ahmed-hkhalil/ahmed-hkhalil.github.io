@@ -370,6 +370,9 @@ const Pos = () => {
             <Link to="/fuel-dashboard" className="btn btn-warning text-dark">
               <span>⛽</span> Fuel Hub
             </Link>
+            <Link to="/daily-sheet" className="btn btn-dark text-white">
+              <span>📋</span> End of Day Sheet
+            </Link>
           </div>
 
           {/* Quick Forecourt Pump Status Bar */}
