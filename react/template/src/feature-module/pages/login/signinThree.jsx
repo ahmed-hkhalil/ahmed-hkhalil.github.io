@@ -22,7 +22,7 @@ const SigninThree = () => {
                   <div className="login-userheading">
                     <h3>Sign In</h3>
                     <h4>
-                      Access the Dreamspos panel using your email and passcode.
+                      Access the FutureProcessing panel using your email and passcode.
                     </h4>
                   </div>
                   <div className="form-login">
@@ -112,7 +112,7 @@ const SigninThree = () => {
               </form>
             </div>
             <div className="my-4 d-flex justify-content-center align-items-center copyright-text">
-              <p>Copyright © 2023 DreamsPOS. All rights reserved</p>
+              <p>Copyright © 2023 FutureProcessing. All rights reserved</p>
             </div>
           </div>
         </div>

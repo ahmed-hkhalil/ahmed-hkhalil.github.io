@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.d613d5a8.css",
-    "main.js": "/static/js/main.e6e4563f.js",
-    "static/js/221.3d48be08.chunk.js": "/static/js/221.3d48be08.chunk.js",
+    "main.js": "/static/js/main.a2f616c3.js",
+    "static/js/221.94a08d3f.chunk.js": "/static/js/221.94a08d3f.chunk.js",
     "static/media/coming-soon.png": "/static/media/coming-soon.bb7ca3eb477ae40f77bf.png",
     "static/media/boxicons.svg": "/static/media/boxicons.9e2b21b135bc7d4c803f.svg",
     "static/media/la-brands-400.svg": "/static/media/la-brands-400.331115337bc9be66667a.svg",
@@ -51,6 +51,6 @@
   },
   "entrypoints": [
     "static/css/main.d613d5a8.css",
-    "static/js/main.e6e4563f.js"
+    "static/js/main.a2f616c3.js"
   ]
 }
