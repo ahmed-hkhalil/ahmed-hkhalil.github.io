@@ -1,13 +1,16 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/rflqetyb/public_html/
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp 404.html $DEPLOYPATH
-    - /bin/cp .htaccess $DEPLOYPATH
-    - /bin/cp .nojekyll $DEPLOYPATH
-    - /bin/cp favicon.png $DEPLOYPATH
-    - /bin/cp manifest.json $DEPLOYPATH
-    - /bin/cp asset-manifest.json $DEPLOYPATH
-    - /bin/cp -R static $DEPLOYPATH
-    - /bin/cp -R assets $DEPLOYPATH
+    - export DEPLOYPATH=/home/rflqetyb/public_html
+    - /bin/cp -f index.html $DEPLOYPATH/index.html
+    - /bin/cp -f 404.html $DEPLOYPATH/404.html
+    - /bin/cp -f .htaccess $DEPLOYPATH/.htaccess
+    - /bin/cp -f .nojekyll $DEPLOYPATH/.nojekyll
+    - /bin/cp -f favicon.png $DEPLOYPATH/favicon.png
+    - /bin/cp -f manifest.json $DEPLOYPATH/manifest.json
+    - /bin/cp -f asset-manifest.json $DEPLOYPATH/asset-manifest.json
+    - /bin/mkdir -p $DEPLOYPATH/static/js $DEPLOYPATH/static/css $DEPLOYPATH/static/media $DEPLOYPATH/assets
+    - /bin/cp -rf static/js/* $DEPLOYPATH/static/js/
+    - /bin/cp -rf static/css/* $DEPLOYPATH/static/css/
+    - /bin/cp -rf static/media/* $DEPLOYPATH/static/media/
+    - /bin/cp -rf assets/* $DEPLOYPATH/assets/
