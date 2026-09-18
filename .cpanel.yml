@@ -9,8 +9,6 @@ deployment:
     - /bin/cp -f favicon.png $DEPLOYPATH/favicon.png
     - /bin/cp -f manifest.json $DEPLOYPATH/manifest.json
     - /bin/cp -f asset-manifest.json $DEPLOYPATH/asset-manifest.json
-    - /bin/mkdir -p $DEPLOYPATH/static/js $DEPLOYPATH/static/css $DEPLOYPATH/static/media $DEPLOYPATH/assets
-    - /bin/cp -rf static/js/* $DEPLOYPATH/static/js/
-    - /bin/cp -rf static/css/* $DEPLOYPATH/static/css/
-    - /bin/cp -rf static/media/* $DEPLOYPATH/static/media/
-    - /bin/cp -rf assets/* $DEPLOYPATH/assets/
+    - /bin/mkdir -p $DEPLOYPATH/static $DEPLOYPATH/assets
+    - /bin/cp -rf static/. $DEPLOYPATH/static/
+    - /bin/cp -rf assets/. $DEPLOYPATH/assets/
