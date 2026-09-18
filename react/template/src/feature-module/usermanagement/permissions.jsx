@@ -2,15 +2,72 @@ import React, { useState } from 'react'
 import ImageWithBasePath from '../../core/img/imagewithbasebath'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { ChevronUp, Filter, Sliders, Zap } from 'react-feather';
+import { ChevronUp, Filter, Sliders, Zap, Shield, Save } from 'react-feather';
 import { setToogleHeader } from '../../core/redux/action';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import { RotateCcw } from 'feather-icons-react/build/IconComponents';
 import { DatePicker } from 'antd';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
+const SYSTEM_MODULES = [
+  { key: "pos", name: "Point of Sale (POS Terminal)" },
+  { key: "daily_sheet", name: "Daily Cashier Reconciliation & Closing" },
+  { key: "fuel", name: "Forecourt Fuel Station & Pumps" },
+  { key: "inventory", name: "Inventory & Convenience Store Products" },
+  { key: "sales", name: "Sales Reports & Analytics" },
+  { key: "finance", name: "Finance, Accounts & Bank Deposits" },
+  { key: "users", name: "User Management & Staff Scheduling" },
+  { key: "settings", name: "System Settings & Hardware Integration" },
+];
+
+const DEFAULT_ROLE_PERMS = {
+  "Super Admin": {
+    pos: { create: true, edit: true, delete: true, view: true },
+    daily_sheet: { create: true, edit: true, delete: true, view: true },
+    fuel: { create: true, edit: true, delete: true, view: true },
+    inventory: { create: true, edit: true, delete: true, view: true },
+    sales: { create: true, edit: true, delete: true, view: true },
+    finance: { create: true, edit: true, delete: true, view: true },
+    users: { create: true, edit: true, delete: true, view: true },
+    settings: { create: true, edit: true, delete: true, view: true },
+  },
+  "POS Cashier": {
+    pos: { create: true, edit: true, delete: false, view: true },
+    daily_sheet: { create: true, edit: true, delete: false, view: true },
+    fuel: { create: false, edit: false, delete: false, view: false },
+    inventory: { create: false, edit: false, delete: false, view: false },
+    sales: { create: false, edit: false, delete: false, view: false },
+    finance: { create: false, edit: false, delete: false, view: false },
+    users: { create: false, edit: false, delete: false, view: false },
+    settings: { create: false, edit: false, delete: false, view: false },
+  },
+  "Store Manager": {
+    pos: { create: true, edit: true, delete: true, view: true },
+    daily_sheet: { create: true, edit: true, delete: true, view: true },
+    fuel: { create: true, edit: true, delete: false, view: true },
+    inventory: { create: true, edit: true, delete: true, view: true },
+    sales: { create: true, edit: true, delete: false, view: true },
+    finance: { create: true, edit: false, delete: false, view: true },
+    users: { create: false, edit: false, delete: false, view: true },
+    settings: { create: false, edit: false, delete: false, view: false },
+  },
+  "Forecourt Attendant": {
+    pos: { create: false, edit: false, delete: false, view: false },
+    daily_sheet: { create: false, edit: false, delete: false, view: false },
+    fuel: { create: true, edit: true, delete: false, view: true },
+    inventory: { create: false, edit: false, delete: false, view: false },
+    sales: { create: false, edit: false, delete: false, view: false },
+    finance: { create: false, edit: false, delete: false, view: false },
+    users: { create: false, edit: false, delete: false, view: false },
+    settings: { create: false, edit: false, delete: false, view: false },
+  },
+};
 
 const Permissions = () => {
-
     const dispatch = useDispatch();
     const data = useSelector((state) => state.toggle_header);
     const [isFilterVisible, setIsFilterVisible] = useState(false);
@@ -22,18 +79,51 @@ const Permissions = () => {
         setSelectedDate(date);
     };
 
-    const role = [
-        { value: 'Choose Role', label: 'Choose Role' },
-        { value: 'Admin', label: 'Admin' },
-        { value: 'Shop Owner', label: 'Shop Owner' },
+    const rolesList = [
+        { value: 'Super Admin', label: 'Super Admin' },
+        { value: 'POS Cashier', label: 'POS Cashier' },
+        { value: 'Store Manager', label: 'Store Manager' },
+        { value: 'Forecourt Attendant', label: 'Forecourt Attendant' },
     ];
-   
 
-    const oldandlatestvalue = [
-        { value: 'date', label: 'Sort by Date' },
-        { value: 'newest', label: 'Newest' },
-        { value: 'oldest', label: 'Oldest' },
-    ];
+    const [currentRole, setCurrentRole] = useState('POS Cashier');
+    const [permissionsState, setPermissionsState] = useState(DEFAULT_ROLE_PERMS);
+
+    const activePerms = permissionsState[currentRole] || DEFAULT_ROLE_PERMS['POS Cashier'];
+
+    const handleRoleChange = (opt) => {
+        if (opt) setCurrentRole(opt.value);
+    };
+
+    const handlePermToggle = (modKey, action) => {
+        const updated = { ...permissionsState };
+        const rolePerms = { ...updated[currentRole] };
+        const modPerms = { ...rolePerms[modKey] };
+
+        if (action === "all") {
+            const allActive = modPerms.create && modPerms.edit && modPerms.delete && modPerms.view;
+            modPerms.create = !allActive;
+            modPerms.edit = !allActive;
+            modPerms.delete = !allActive;
+            modPerms.view = !allActive;
+        } else {
+            modPerms[action] = !modPerms[action];
+        }
+
+        rolePerms[modKey] = modPerms;
+        updated[currentRole] = rolePerms;
+        setPermissionsState(updated);
+    };
+
+    const handleSavePermissions = () => {
+        MySwal.fire({
+            icon: "success",
+            title: "Permissions Updated",
+            text: `Permissions matrix for ${currentRole} successfully saved.`,
+            confirmButtonColor: "#ff9f43",
+        });
+    };
+
     const renderTooltip = (props) => (
         <Tooltip id="pdf-tooltip" {...props}>
             Pdf
@@ -54,11 +144,7 @@ const Permissions = () => {
             Refresh
         </Tooltip>
     );
-    const renderCollapseTooltip = (props) => (
-        <Tooltip id="refresh-tooltip" {...props}>
-            Collapse
-        </Tooltip>
-    )
+
     return (
         <div>
             <div className="page-wrapper">
@@ -66,8 +152,8 @@ const Permissions = () => {
                     <div className="page-header">
                         <div className="add-item d-flex">
                             <div className="page-title">
-                                <h4>Permission</h4>
-                                <h6>Manage your permissions</h6>
+                                <h4>Role Permissions Matrix</h4>
+                                <h6>Configure module access rights by system role</h6>
                             </div>
                         </div>
                         <ul className="table-top-head">
@@ -87,7 +173,6 @@ const Permissions = () => {
                             </li>
                             <li>
                                 <OverlayTrigger placement="top" overlay={renderPrinterTooltip}>
-
                                     <Link data-bs-toggle="tooltip" data-bs-placement="top">
                                         <i data-feather="printer" className="feather-printer" />
                                     </Link>
@@ -95,329 +180,124 @@ const Permissions = () => {
                             </li>
                             <li>
                                 <OverlayTrigger placement="top" overlay={renderRefreshTooltip}>
-
-                                    <Link data-bs-toggle="tooltip" data-bs-placement="top">
+                                    <Link data-bs-toggle="tooltip" data-bs-placement="top" onClick={() => setPermissionsState(DEFAULT_ROLE_PERMS)}>
                                         <RotateCcw />
-                                    </Link>
-                                </OverlayTrigger>
-                            </li>
-                            <li>
-                                <OverlayTrigger placement="top" overlay={renderCollapseTooltip}>
-                                    <Link
-                                        data-bs-toggle="tooltip"
-                                        data-bs-placement="top"
-                                        id="collapse-header"
-                                        className={data ? "active" : ""}
-                                        onClick={() => { dispatch(setToogleHeader(!data)) }}
-                                    >
-                                        <ChevronUp />
                                     </Link>
                                 </OverlayTrigger>
                             </li>
                         </ul>
                     </div>
-                    {/* /product list */}
+
                     <div className="card table-list-card">
                         <div className="card-body">
-                            <div className="table-top">
-                                <div className="search-set">
-                                    <div className="search-input">
-                                        <input
-                                            type="text"
-                                            placeholder="Search"
-                                            className="form-control form-control-sm formsearch"
-                                        />
-                                        <Link to className="btn btn-searchset">
-                                            <i data-feather="search" className="feather-search" />
-                                        </Link>
-                                    </div>
-                                </div>
-                                <div className="search-path">
-                                    <Link className={`btn btn-filter ${isFilterVisible ? "setclose" : ""}`} id="filter_search">
-                                        <Filter
-                                            className="filter-icon"
-                                            onClick={toggleFilterVisibility}
-                                        />
-                                        <span onClick={toggleFilterVisibility}>
-                                            <ImageWithBasePath src="assets/img/icons/closes.svg" alt="img" />
-                                        </span>
-                                    </Link>
-                                </div>
-                                <div className="form-sort">
-                                    <Sliders className="info-img" />
+                            {/* Role Selection Banner */}
+                            <div className="row align-items-center mb-3 p-3 bg-light rounded mx-0">
+                                <div className="col-md-5">
+                                    <label className="form-label small fw-bold mb-1 d-flex align-items-center gap-1">
+                                        <Shield size={14} /> Active Role:
+                                    </label>
                                     <Select
                                         className="select"
-                                        options={oldandlatestvalue}
-                                        placeholder="Newest"
+                                        options={rolesList}
+                                        value={rolesList.find(r => r.value === currentRole)}
+                                        onChange={handleRoleChange}
+                                        placeholder="Choose Role"
                                     />
                                 </div>
-                            </div>
-                            {/* /Filter */}
-                            <div
-                                className={`card${isFilterVisible ? ' visible' : ''}`}
-                                id="filter_inputs"
-                                style={{ display: isFilterVisible ? 'block' : 'none' }}
-                            >
-                                <div className="card-body pb-0">
-                                    <div className="row">
-                                        <div className="col-lg-3 col-sm-6 col-12">
-                                            <div className="input-blocks">
-                                                <Zap className="info-img" />
-                                                
-                                                <Select
-                                                className="select"
-                                                options={role}
-                                                placeholder="Choose Role"
-                                            />
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-3 col-sm-6 col-12">
-                                            <div className="input-blocks">
-                                                <div className="input-groupicon">
-                                                    <DatePicker
-                                                        selected={selectedDate}
-                                                        onChange={handleDateChange}
-                                                        type="date"
-                                                        className="filterdatepicker"
-                                                        dateFormat="dd-MM-yyyy"
-                                                        placeholder='Choose Date'
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-3 col-sm-6 col-12 ms-auto">
-                                            <div className="input-blocks">
-                                                <a className="btn btn-filters ms-auto">
-                                                    {" "}
-                                                    <i data-feather="search" className="feather-search" />{" "}
-                                                    Search{" "}
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className="col-md-7 text-md-end mt-2 mt-md-0">
+                                    <span className="badge bg-primary me-2">
+                                        Configuring: {currentRole}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-success"
+                                        onClick={handleSavePermissions}
+                                    >
+                                        <Save size={14} className="me-1" /> Save Permissions
+                                    </button>
                                 </div>
                             </div>
-                            {/* /Filter */}
+
                             <div className="table-responsive">
-                                <table className="table  datanew">
+                                <table className="table datanew">
                                     <thead>
                                         <tr>
-                                            <th className="no-sort">
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" id="select-all" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </th>
                                             <th>Modules</th>
                                             <th>Create</th>
                                             <th>Edit</th>
                                             <th>Delete</th>
                                             <th>View</th>
-                                            <th className="no-sort">Allow all</th>
+                                            <th className="no-sort">Allow All</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>Inventory</td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>Expense</td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>Product</td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>Settings</td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>Category</td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <label className="checkboxs">
-                                                    <input type="checkbox" />
-                                                    <span className="checkmarks" />
-                                                </label>
-                                            </td>
-                                        </tr>
+                                        {SYSTEM_MODULES.map((mod) => {
+                                            const perm = activePerms[mod.key] || { create: false, edit: false, delete: false, view: false };
+                                            const allChecked = perm.create && perm.edit && perm.delete && perm.view;
+
+                                            return (
+                                                <tr key={mod.key}>
+                                                    <td className="fw-semibold text-dark">
+                                                        {mod.name}
+                                                    </td>
+                                                    <td>
+                                                        <label className="checkboxs">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!perm.create}
+                                                                onChange={() => handlePermToggle(mod.key, "create")}
+                                                            />
+                                                            <span className="checkmarks" />
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label className="checkboxs">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!perm.edit}
+                                                                onChange={() => handlePermToggle(mod.key, "edit")}
+                                                            />
+                                                            <span className="checkmarks" />
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label className="checkboxs">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!perm.delete}
+                                                                onChange={() => handlePermToggle(mod.key, "delete")}
+                                                            />
+                                                            <span className="checkmarks" />
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label className="checkboxs">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={!!perm.view}
+                                                                onChange={() => handlePermToggle(mod.key, "view")}
+                                                            />
+                                                            <span className="checkmarks" />
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <label className="checkboxs">
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={allChecked}
+                                                                onChange={() => handlePermToggle(mod.key, "all")}
+                                                            />
+                                                            <span className="checkmarks" />
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    {/* /product list */}
                 </div>
             </div>
         </div>

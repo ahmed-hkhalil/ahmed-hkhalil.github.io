@@ -53,6 +53,24 @@ export const SidebarData = [
         ]
       },
       {
+        label: "Daily Reconciliation",
+        submenuOpen: true,
+        showSubRoute: false,
+        submenuHdr: "Daily Reconciliation",
+        submenuItems: [
+          {
+            label: "Cashier Reconciliation",
+            icon: <Icon.FileText />,
+            submenu: true,
+            showSubRoute: false,
+            submenuItems: [
+              { label: "Daily Cashier Sheet", link: "/daily-sheet" },
+              { label: "Weekly Reconciliation", link: "/weekly-sheets" },
+            ]
+          }
+        ]
+      },
+      {
         label: "Fuel Station",
         submenuOpen: true,
         showSubRoute: false,
@@ -65,8 +83,6 @@ export const SidebarData = [
             showSubRoute: false,
             submenuItems: [
               { label: "Fuel Dashboard", link: "/fuel-dashboard" },
-              { label: "Daily Cashier Sheet", link: "/daily-sheet" },
-              { label: "Weekly Reconciliation", link: "/weekly-sheets" },
               { label: "Pumps & Dispensers", link: "/fuel-pumps" },
               { label: "Underground Tanks", link: "/fuel-tanks" },
               { label: "Shift Meter Readings", link: "/fuel-meters" },

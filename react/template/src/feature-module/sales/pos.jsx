@@ -13,9 +13,11 @@ import Swal from 'sweetalert2'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
+import { getCurrentUser, logoutUser, ROLES } from '../../core/auth';
 
 const Pos = () => {
+  const currentUser = getCurrentUser();
+  const isCashier = currentUser?.role === ROLES.CASHIER;
   const customers = [
     { value: 'walkInCustomer', label: 'Walk in Customer' },
     { value: 'john', label: 'John' },
@@ -367,11 +369,21 @@ const Pos = () => {
               </span>
               Transaction
             </Link>
-            <Link to="/fuel-dashboard" className="btn btn-warning text-dark">
-              <span>⛽</span> Fuel Hub
-            </Link>
+            {!isCashier && (
+              <>
+                <Link to="/dashboard" className="btn btn-outline-primary">
+                  <span>📊</span> Dashboard
+                </Link>
+                <Link to="/fuel-dashboard" className="btn btn-warning text-dark">
+                  <span>⛽</span> Fuel Hub
+                </Link>
+              </>
+            )}
             <Link to="/daily-sheet" className="btn btn-dark text-white">
-              <span>📋</span> End of Day Sheet
+              <span>📋</span> {isCashier ? "Daily Shift Close" : "Reconciliation"}
+            </Link>
+            <Link to="/profile" className="btn btn-outline-secondary">
+              <span>👤</span> {currentUser?.name || "Profile"}
             </Link>
           </div>
 

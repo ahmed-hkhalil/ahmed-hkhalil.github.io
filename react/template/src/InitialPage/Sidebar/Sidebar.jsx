@@ -1,18 +1,46 @@
 import React, { useState } from "react";
 import Scrollbars from "react-custom-scrollbars-2";
-// import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { SidebarData } from "../../core/json/siderbar_data";
 import HorizontalSidebar from "./horizontalSidebar";
 import CollapsedSidebar from "./collapsedSidebar";
+import { getCurrentUser } from "../../core/auth";
+import * as Icon from "react-feather";
+
+const CashierSidebarData = [
+  {
+    label: "Cashier Operations",
+    submenuOpen: true,
+    showSubRoute: false,
+    submenuHdr: "Cashier Operations",
+    submenuItems: [
+      {
+        label: "Point of Sale (POS)",
+        link: "/pos",
+        icon: <Icon.ShoppingCart className="feather-16" />,
+        submenu: false,
+      },
+      {
+        label: "Daily Shift Close",
+        link: "/daily-sheet",
+        icon: <Icon.FileText className="feather-16" />,
+        submenu: false,
+      },
+      {
+        label: "My Profile",
+        link: "/profile",
+        icon: <Icon.User className="feather-16" />,
+        submenu: false,
+      },
+    ],
+  },
+];
 
 const Sidebar = () => {
-  // const SidebarData = useSelector((state) => state.sidebar_data);
-  // console.log(sidebarData, "sidebar");
-
   const Location = useLocation();
-
-  console.log("Location.pathname", Location.pathname);
+  const currentUser = getCurrentUser();
+  const isCashier = currentUser?.role === "cashier";
+  const activeSidebarData = isCashier ? CashierSidebarData : SidebarData;
 
   const [subOpen, setSubopen] = useState("");
   const [subsidebar, setSubsidebar] = useState("");
@@ -40,7 +68,7 @@ const Sidebar = () => {
           <div className="sidebar-inner slimscroll">
             <div id="sidebar-menu" className="sidebar-menu">
               <ul>
-                {SidebarData?.map((mainLabel, index) => (
+                {activeSidebarData?.map((mainLabel, index) => (
                   <li className="submenu-open" key={index}>
                     <h6 className="submenu-hdr">{mainLabel?.label}</h6>
 
@@ -165,8 +193,8 @@ const Sidebar = () => {
           </div>
         </Scrollbars>
       </div>
-      <HorizontalSidebar />
-      <CollapsedSidebar />
+      {!isCashier && <HorizontalSidebar />}
+      {!isCashier && <CollapsedSidebar />}
     </div>
   );
 };

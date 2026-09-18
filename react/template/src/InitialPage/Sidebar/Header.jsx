@@ -5,11 +5,14 @@ import FeatherIcon from "feather-icons-react";
 import ImageWithBasePath from "../../core/img/imagewithbasebath";
 import { Search, XCircle } from "react-feather";
 import { all_routes } from "../../Router/all_routes";
+import { getCurrentUser, logoutUser, ROLES } from "../../core/auth";
 
 const Header = () => {
   const route = all_routes;
   const [toggle, SetToggle] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const currentUser = getCurrentUser();
+  const isCashier = currentUser?.role === ROLES.CASHIER;
 
   const isElementVisible = (element) => {
     return element.offsetWidth > 0 || element.offsetHeight > 0;
@@ -165,13 +168,13 @@ const Header = () => {
           onMouseLeave={expandMenu}
           onMouseOver={expandMenuOpen}
         >
-          <Link to="/dashboard" className="logo logo-normal">
+          <Link to={isCashier ? "/pos" : "/dashboard"} className="logo logo-normal">
             <ImageWithBasePath src="assets/img/logo.png" alt="img" />
           </Link>
-          <Link to="/dashboard" className="logo logo-white">
+          <Link to={isCashier ? "/pos" : "/dashboard"} className="logo logo-white">
             <ImageWithBasePath src="assets/img/logo-white.png" alt="img" />
           </Link>
-          <Link to="/dashboard" className="logo-small">
+          <Link to={isCashier ? "/pos" : "/dashboard"} className="logo-small">
             <ImageWithBasePath src="assets/img/logo-small.png" alt="img" />
           </Link>
           <Link
@@ -595,12 +598,13 @@ const Header = () => {
             </div>
           </li>
           {/* /Notifications */}
-          <li className="nav-item nav-item-box">
-            <Link to="/general-settings">
-              {/* <i data-feather="settings" /> */}
-              <FeatherIcon icon="settings" />
-            </Link>
-          </li>
+          {!isCashier && (
+            <li className="nav-item nav-item-box">
+              <Link to="/general-settings">
+                <FeatherIcon icon="settings" />
+              </Link>
+            </li>
+          )}
           <li className="nav-item dropdown has-arrow main-drop">
             <Link
               to="#"
@@ -616,8 +620,8 @@ const Header = () => {
                   />
                 </span>
                 <span className="user-detail">
-                  <span className="user-name">John Smilga</span>
-                  <span className="user-role">Super Admin</span>
+                  <span className="user-name">{currentUser?.name || (isCashier ? "Cashier Station #1" : "Store Administrator")}</span>
+                  <span className="user-role">{currentUser?.roleTitle || (isCashier ? "POS Cashier" : "Super Admin")}</span>
                 </span>
               </span>
             </Link>
@@ -632,26 +636,29 @@ const Header = () => {
                     <span className="status online" />
                   </span>
                   <div className="profilesets">
-                    <h6>{localStorage.getItem("userName") || "Store Admin"}</h6>
-                    <h5>{localStorage.getItem("userRole") === "cashier" ? "Cashier" : "Super Admin"}</h5>
+                    <h6>{currentUser?.name || (isCashier ? "Cashier Station #1" : "Store Administrator")}</h6>
+                    <h5 className="text-primary fw-bold">{currentUser?.roleTitle || (isCashier ? "POS Cashier" : "Super Admin")}</h5>
+                    {currentUser?.storeName && (
+                      <small className="text-muted d-block" style={{ fontSize: "11px" }}>{currentUser.storeName}</small>
+                    )}
                   </div>
                 </div>
                 <hr className="m-0" />
-                <Link className="dropdown-item" to={route.route}>
+                <Link className="dropdown-item" to="/profile">
                   <i className="me-2" data-feather="user" /> My Profile
                 </Link>
-                <Link className="dropdown-item" to={route.generalsettings}>
-                  <i className="me-2" data-feather="settings" />
-                  Settings
-                </Link>
+                {!isCashier && (
+                  <Link className="dropdown-item" to={route.generalsettings || "/general-settings"}>
+                    <i className="me-2" data-feather="settings" />
+                    Settings
+                  </Link>
+                )}
                 <hr className="m-0" />
                 <Link
                   className="dropdown-item logout pb-0"
                   to="/"
                   onClick={() => {
-                    localStorage.removeItem("authenticated");
-                    localStorage.removeItem("userRole");
-                    localStorage.removeItem("userName");
+                    logoutUser();
                   }}
                 >
                   <ImageWithBasePath
@@ -677,19 +684,19 @@ const Header = () => {
             <i className="fa fa-ellipsis-v" />
           </Link>
           <div className="dropdown-menu dropdown-menu-right">
-            <Link className="dropdown-item" to="profile">
+            <Link className="dropdown-item" to="/profile">
               My Profile
             </Link>
-            <Link className="dropdown-item" to="generalsettings">
-              Settings
-            </Link>
+            {!isCashier && (
+              <Link className="dropdown-item" to="/general-settings">
+                Settings
+              </Link>
+            )}
             <Link
               className="dropdown-item"
               to="/"
               onClick={() => {
-                localStorage.removeItem("authenticated");
-                localStorage.removeItem("userRole");
-                localStorage.removeItem("userName");
+                logoutUser();
               }}
             >
               Logout

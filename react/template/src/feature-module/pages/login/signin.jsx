@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageWithBasePath from "../../../core/img/imagewithbasebath";
 import { Link, useNavigate } from "react-router-dom";
 import { all_routes } from "../../../Router/all_routes";
+import { isAuthenticated, getCurrentUser, loginUser, ROLES } from "../../../core/auth";
 
 const Signin = () => {
   const route = all_routes;
@@ -12,13 +13,22 @@ const Signin = () => {
   const [selectedRole, setSelectedRole] = useState("admin"); // 'admin' or 'cashier'
   const [rememberMe, setRememberMe] = useState(true);
 
+  // If already authenticated, redirect to appropriate landing page
+  useEffect(() => {
+    if (isAuthenticated()) {
+      const user = getCurrentUser();
+      if (user?.role === ROLES.CASHIER) {
+        navigate("/pos", { replace: true });
+      } else {
+        navigate("/dashboard", { replace: true });
+      }
+    }
+  }, [navigate]);
+
   const handleSubmit = (e) => {
     if (e) e.preventDefault();
-    // Persist login session
-    localStorage.setItem("authenticated", "true");
-    localStorage.setItem("userRole", selectedRole);
-    localStorage.setItem("userName", selectedRole === "admin" ? "Store Administrator" : "Cashier Station #1");
-    localStorage.setItem("userEmail", email);
+    // Persist login session via centralized auth helper
+    loginUser(selectedRole, email, selectedRole === "admin" ? "Store Administrator" : "Cashier Station #1");
 
     if (selectedRole === "cashier") {
       navigate(route.pos || "/pos");

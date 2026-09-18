@@ -10,6 +10,8 @@ import ThemeSettings from "../InitialPage/themeSettings";
 import Loader from "../feature-module/loader/loader";
 import Signin from "../feature-module/pages/login/signin";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 const AllRoutes = () => {
   const data = useSelector((state) => state.toggle_header);
   // const layoutStyles = useSelector((state) => state.layoutstyledata);
@@ -43,7 +45,14 @@ const AllRoutes = () => {
   return (
     <div>
       <Routes>
-        <Route path="/pos" element={<Pospages />}>
+        <Route
+          path="/pos"
+          element={
+            <ProtectedRoute allowedRoles={["cashier", "admin"]}>
+              <Pospages />
+            </ProtectedRoute>
+          }
+        >
           {posRoutes.map((route, id) => (
             <Route path={route.path} element={route.element} key={id} />
           ))}
@@ -57,8 +66,15 @@ const AllRoutes = () => {
           ))}
         </Route>
 
-        {/* Admin and feature modules */}
-        <Route path="/" element={<HeaderLayout />}>
+        {/* Protected feature and admin modules */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <HeaderLayout />
+            </ProtectedRoute>
+          }
+        >
           {publicRoutes.map((route, id) => (
             <Route path={route.path} element={route.element} key={id} />
           ))}
